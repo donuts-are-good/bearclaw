@@ -19,6 +19,14 @@ var (
 	templateFolder = "./templates"
 )
 
+func init() {
+	folders := []string{inFolder, outFolder, templateFolder}
+	createFoldersErr := createFolders(folders)
+	if createFoldersErr != nil {
+		log.Println(createFoldersErr)
+	}
+}
+
 func main() {
 	ConvertMarkdownToHTML(inFolder, outFolder, templateFolder)
 	CreatePostListHTML(inFolder, outFolder, templateFolder)
@@ -36,15 +44,6 @@ func createFolders(folders []string) error {
 	return nil
 }
 
-func init() {
-
-	folders := []string{inFolder, outFolder, templateFolder}
-	createFoldersErr := createFolders(folders)
-	if createFoldersErr != nil {
-		log.Println(createFoldersErr)
-	}
-}
-
 // ConvertMarkdownToHTML converts markdown files in a folder to HTML files
 func ConvertMarkdownToHTML(inFolder, outFolder, templateFolder string) {
 	files, _ := os.ReadDir(inFolder)
@@ -53,18 +52,13 @@ func ConvertMarkdownToHTML(inFolder, outFolder, templateFolder string) {
 		if filepath.Ext(file.Name()) == ".md" {
 			markdownFile, _ := os.Open(inFolder + "/" + file.Name())
 			defer markdownFile.Close()
-
 			htmlFile, _ := os.Create(outFolder + "/" + file.Name() + ".html")
 			defer htmlFile.Close()
-
 			reader := bufio.NewReader(markdownFile)
 			markdown, _ := io.ReadAll(reader)
-
 			html := blackfriday.MarkdownCommon(markdown)
-
 			header, _ := os.ReadFile(templateFolder + "/header.html")
 			footer, _ := os.ReadFile(templateFolder + "/footer.html")
-
 			fmt.Fprintln(htmlFile, string(header)+strings.TrimSpace(string(html))+string(footer))
 		}
 	}

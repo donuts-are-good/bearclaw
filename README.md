@@ -10,9 +10,9 @@ no node-modules, no react, no fancy stuff or cool emojis. it just works.
 ## how do we use it?
 bearclaw can be run on-demand, or it can rebuild automatically when it sees changes. there are 3 folders: `markdown`, `output`, and `templates`.
 
-- markdown - all your new posts go here
-- output - bearclaw puts all of your html here
-- templates - header.html and footer.html
+- **markdown** - all your new posts go here
+- **output** - bearclaw puts all of your html here
+- **templates** - header.html and footer.html
 
 that's it! point your webserver at `output` or handle it however is best for your case.
 

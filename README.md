@@ -22,6 +22,10 @@ that's it! point your webserver at `output` or handle it however is best for you
 
 if you run in to issues, there's a short bug report form you can fill out, or you can contribute with a pull-request.
 
+## screenshot
+
+![image](https://user-images.githubusercontent.com/96031819/218305635-75bdf421-e412-4b90-9f4a-26947219bf51.png)
+
 ## greetz
 
 the Dozens, code-cartel, offtopic-gophers, the garrison, and the monster beverage company.

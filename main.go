@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"io"
 	"log"
@@ -10,6 +11,7 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/fsnotify/fsnotify"
 	"github.com/russross/blackfriday"
 )
 
@@ -20,16 +22,58 @@ var (
 )
 
 func init() {
-	folders := []string{inFolder, outFolder, templateFolder}
-	createFoldersErr := createFolders(folders)
+	foldersToCreate := []string{inFolder, outFolder, templateFolder}
+	createFoldersErr := createFolders(foldersToCreate)
 	if createFoldersErr != nil {
 		log.Println(createFoldersErr)
 	}
 }
 
 func main() {
-	ConvertMarkdownToHTML(inFolder, outFolder, templateFolder)
-	CreatePostListHTML(inFolder, outFolder, templateFolder)
+	watchFlag := flag.Bool("watch", false, "watch the current directory for changes")
+	flag.Parse()
+
+	if *watchFlag {
+		foldersToWatch := []string{templateFolder, inFolder}
+		go watchFoldersForChanges(foldersToWatch)
+		fmt.Println("Waiting for changes: ", foldersToWatch)
+		select {}
+	}
+
+	markdownToHTML(inFolder, outFolder, templateFolder)
+	createPostList(inFolder, outFolder, templateFolder)
+}
+
+func watchFoldersForChanges(folders []string) {
+	for _, folder := range folders {
+		watcher, err := fsnotify.NewWatcher()
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer watcher.Close()
+
+		done := make(chan bool)
+		go func() {
+			for {
+				select {
+				case event := <-watcher.Events:
+					if event.Op&fsnotify.Write == fsnotify.Write {
+						log.Println("modified:", event.Name, " - rebuilding files..")
+						markdownToHTML(inFolder, outFolder, templateFolder)
+						createPostList(inFolder, outFolder, templateFolder)
+					}
+				case err := <-watcher.Errors:
+					log.Println("error:", err)
+				}
+			}
+		}()
+
+		err = watcher.Add(folder)
+		if err != nil {
+			log.Fatal(err)
+		}
+		<-done
+	}
 }
 
 func createFolders(folders []string) error {
@@ -44,8 +88,7 @@ func createFolders(folders []string) error {
 	return nil
 }
 
-// ConvertMarkdownToHTML converts markdown files in a folder to HTML files
-func ConvertMarkdownToHTML(inFolder, outFolder, templateFolder string) {
+func markdownToHTML(inFolder, outFolder, templateFolder string) {
 	files, _ := os.ReadDir(inFolder)
 
 	for _, file := range files {
@@ -64,17 +107,13 @@ func ConvertMarkdownToHTML(inFolder, outFolder, templateFolder string) {
 	}
 }
 
-// CreatePostListHTML creates an HTML file with a list of posts by title
-func CreatePostListHTML(inFolder, outFolder, templateFolder string) {
+func createPostList(inFolder, outFolder, templateFolder string) {
 	files, _ := os.ReadDir(inFolder)
-
-	// Sort the files by modification time in reverse order
 	sort.Slice(files, func(i, j int) bool {
 		fi, _ := os.Stat(inFolder + "/" + files[i].Name())
 		fj, _ := os.Stat(inFolder + "/" + files[j].Name())
 		return fi.ModTime().After(fj.ModTime())
 	})
-
 	postList := "<ul>"
 	for _, file := range files {
 		if filepath.Ext(file.Name()) == ".md" {
@@ -83,12 +122,9 @@ func CreatePostListHTML(inFolder, outFolder, templateFolder string) {
 		}
 	}
 	postList += "</ul>"
-
 	htmlFile, _ := os.Create(outFolder + "/posts.html")
 	defer htmlFile.Close()
-
 	header, _ := os.ReadFile(templateFolder + "/header.html")
 	footer, _ := os.ReadFile(templateFolder + "/footer.html")
-
 	fmt.Fprintln(htmlFile, string(header)+postList+string(footer))
 }

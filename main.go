@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"path/filepath"
 	"sort"
@@ -12,13 +13,36 @@ import (
 	"github.com/russross/blackfriday"
 )
 
-func main() {
-	inFolder := "./markdown"
-	outFolder := "./output"
-	templateFolder := "./templates"
+var (
+	inFolder       = "./markdown"
+	outFolder      = "./output"
+	templateFolder = "./templates"
+)
 
+func main() {
 	ConvertMarkdownToHTML(inFolder, outFolder, templateFolder)
 	CreatePostListHTML(inFolder, outFolder, templateFolder)
+}
+
+func createFolders(folders []string) error {
+	for _, folder := range folders {
+		if _, err := os.Stat(folder); os.IsNotExist(err) {
+			err = os.MkdirAll(folder, os.ModePerm)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+func init() {
+
+	folders := []string{inFolder, outFolder, templateFolder}
+	createFoldersErr := createFolders(folders)
+	if createFoldersErr != nil {
+		log.Println(createFoldersErr)
+	}
 }
 
 // ConvertMarkdownToHTML converts markdown files in a folder to HTML files

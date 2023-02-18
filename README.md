@@ -2,6 +2,8 @@
 # bearclaw
 a tiny static site generator, written in Go
 
+![donuts-are-good's followers](https://img.shields.io/github/followers/donuts-are-good?&color=555&style=for-the-badge&label=followers) ![donuts-are-good's stars](https://img.shields.io/github/stars/donuts-are-good?affiliations=OWNER%2CCOLLABORATOR&color=555&style=for-the-badge) ![donuts-are-good's visitors](https://komarev.com/ghpvc/?username=donuts-are-good&color=555555&style=for-the-badge&label=visitors)
+
 ## what's a static site generator
 a static site is a site with no fancy clicky things, signups, comments, just plain html. writing a raw html page for your blog makes it load very fast, but there's a lot of typing involved when designing it. markdown is a simpler and faster way to write pages, and bearclaw converts those markdown files to html for you, with your style template. 
 

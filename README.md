@@ -10,15 +10,19 @@ a static site is a site with no fancy clicky things, signups, comments, just pla
 no node-modules, no react, no fancy stuff or cool emojis. it just works.
 
 ## how do we use it?
-bearclaw can be run on-demand, or it can rebuild automatically when it sees changes. there are 3 folders: `markdown`, `output`, and `templates`.
+bearclaw can be run on-demand, or it can rebuild automatically when it sees changes. there are 3 folders in the basic install: `markdown`, `output`, and `templates`. there is an optional 4th folder after v1.2.0 for `plugins`.
 
 - **markdown** - all your new posts go here
 - **output** - bearclaw puts your html and rss here
 - **templates** - header.html and footer.html
+- ***plugins*** *(optional)* - extra features for your page
 
 that's it! point your webserver at `output` or handle it however is best for your case.
 
 **tip:** you can run `bearclaw` and it will run once, or you can use `./bearclaw --watch` to watch the current folder for changes.
+
+## plugins
+bearclaw supports plugins. plugins can be installed in the plugins folder and called in your markdown or html pages using an html comment like this: `<!-- plugin "./plugins/myCoolPlugin/comments.html" -->`. bearclaw will swap the comment for the contents of the plugin file at the specified path.
 
 ## issues
 

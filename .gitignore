@@ -1,2 +1,6 @@
 bearclaw
 bearclaw*
+output/*
+BUILDS
+.DS_Store
+.Trash-1000

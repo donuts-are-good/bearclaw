@@ -291,53 +291,68 @@ func createPostList(inFolder, outFolder, templateFolder string) {
 	// combine them
 	fmt.Fprintln(htmlFile, string(header)+postList+string(footer))
 }
-
-func createAboutPage(outFolder, templateFolder string) {
+func createAboutPage(outFolder, templateFolder string) error {
 
 	// create the about file
-	htmlFile, _ := os.Create(outFolder + "/about.html")
-	defer htmlFile.Close()
+	aboutFile, err := os.Create(outFolder + "/about.html")
+	if err != nil {
+		return err
+	}
+	defer aboutFile.Close()
 
 	// read the header/footer templates
-	header, _ := os.ReadFile(templateFolder + "/header.html")
-	footer, _ := os.ReadFile(templateFolder + "/footer.html")
+	header, err := os.ReadFile(templateFolder + "/header.html")
+	if err != nil {
+		return err
+	}
+	footer, err := os.ReadFile(templateFolder + "/footer.html")
+	if err != nil {
+		return err
+	}
 
-	// create the about page content
-	aboutContent := "<h1>" + site_name + "</h1>"
-	aboutContent += "<p>" + site_description + "</p>"
-	aboutContent += "<p><strong>Site link:</strong> " + site_link + "</p>"
-	aboutContent += "<p><strong>Site license:</strong> " + site_license + "</p>"
-	aboutContent += "<h2>Author</h2>"
-	aboutContent += "<p><strong>Name:</strong> " + author_name + "</p>"
-	aboutContent += "<p><strong>Bio:</strong> " + author_bio + "</p>"
-	aboutContent += "<p><strong>Links:</strong></p><ul>"
+	// content vars
+	siteName := "<h1>" + site_name + "</h1>"
+	siteDesc := "<p>" + site_description + "</p>"
+	siteLink := "<p><a href='" + site_link + "'>" + site_link + "</a></p>"
+	siteLicense := "<p>" + site_license + "</p>"
 
+	// author vars
+	authorName := "<h2>" + author_name + "</h2>"
+	authorBio := "<p>" + author_bio + "</p>"
+	authorLinks := "<ul>"
 	for _, link := range author_links {
-		aboutContent += "<li><a href='" + link + "'>" + link + "</a></li>"
+		authorLinks += "<li><a href='" + link + "'>" + link + "</a></li>"
+	}
+	authorLinks += "</ul>"
+
+	// plugin vars
+	pluginsSection := ""
+	plugins, err := os.ReadDir(pluginsFolder)
+	if err != nil {
+		return err
+	}
+	if len(plugins) > 0 {
+		pluginsSection = "<h2>Plugins</h2><ul>"
+		for _, plugin := range plugins {
+			file, err := os.Open(pluginsFolder + "/" + plugin.Name() + "/plugin.json")
+			if err != nil {
+				return err
+			}
+			defer file.Close()
+
+			var pluginData map[string]string
+			err = json.NewDecoder(file).Decode(&pluginData)
+			if err != nil {
+				return err
+			}
+
+			pluginsSection += "<li>" + pluginData["plugin_name"] + " by " + pluginData["plugin_author"] + " - " + pluginData["plugin_description"] + "</li>"
+		}
+		pluginsSection += "</ul>"
 	}
 
-	aboutContent += "</ul>"
-	aboutContent += "<h2>Plugins</h2>"
+	// combine the content and write to the about file
+	fmt.Fprintln(aboutFile, string(header)+siteName+siteDesc+siteLink+siteLicense+authorName+authorBio+authorLinks+pluginsSection+string(footer))
 
-	// search for plugin directories
-	plugins, _ := filepath.Glob("./plugins/*")
-	for _, plugin := range plugins {
-		// read the plugin.json file
-		file, _ := os.Open(plugin + "/plugin.json")
-		defer file.Close()
-		decoder := json.NewDecoder(file)
-		var pluginData map[string]string
-		decoder.Decode(&pluginData)
-
-		// add the plugin information to the about page content
-		aboutContent += "<h3>" + pluginData["plugin_name"] + "</h3>"
-		aboutContent += "<p><strong>Description:</strong> " + pluginData["plugin_description"] + "</p>"
-		aboutContent += "<p><strong>Author:</strong> " + pluginData["plugin_author"] + "</p>"
-		aboutContent += "<p><strong>Link:</strong> <a href='" + pluginData["plugin_link"] + "'>" + pluginData["plugin_link"] + "</a></p>"
-		aboutContent += "<p><strong>License:</strong> " + pluginData["plugin_license"] + "</p>"
-	}
-
-	// combine the header, about page content, and footer
-	fmt.Fprintln(htmlFile, string(header)+aboutContent+string(footer))
-
+	return nil
 }

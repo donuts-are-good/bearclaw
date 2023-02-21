@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	_ "embed"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"io"
@@ -31,7 +32,24 @@ var (
 	outFolder      = "./output"    // your rendered html will end up here
 	templateFolder = "./templates" // your header and footer go here
 	pluginsFolder  = "./plugins"   // your plugins go here
+)
 
+// config
+var (
+
+	// author vars
+	author_name  = "@donuts-are-good"
+	author_bio   = "i like Go and jelly filled pastries :)"
+	author_links = []string{
+		"https://github.com/donuts-are-good/",
+		"https://github.com/donuts-are-good/bearclaw",
+	}
+
+	// content vars
+	site_name        = "bearclaw blog"
+	site_description = "a blog about a tiny static site generator in Go!"
+	site_link        = "https://" + "bearclaw.blog"
+	site_license     = "MIT License " + author_name + " " + site_link
 )
 
 // init runs before main()
@@ -73,6 +91,7 @@ func main() {
 	// now, if nothing has gone wrong, we process the html
 	markdownToHTML(inFolder, outFolder, templateFolder)
 	createPostList(inFolder, outFolder, templateFolder)
+	createAboutPage(outFolder, templateFolder)
 
 }
 
@@ -271,4 +290,54 @@ func createPostList(inFolder, outFolder, templateFolder string) {
 
 	// combine them
 	fmt.Fprintln(htmlFile, string(header)+postList+string(footer))
+}
+
+func createAboutPage(outFolder, templateFolder string) {
+
+	// create the about file
+	htmlFile, _ := os.Create(outFolder + "/about.html")
+	defer htmlFile.Close()
+
+	// read the header/footer templates
+	header, _ := os.ReadFile(templateFolder + "/header.html")
+	footer, _ := os.ReadFile(templateFolder + "/footer.html")
+
+	// create the about page content
+	aboutContent := "<h1>" + site_name + "</h1>"
+	aboutContent += "<p>" + site_description + "</p>"
+	aboutContent += "<p><strong>Site link:</strong> " + site_link + "</p>"
+	aboutContent += "<p><strong>Site license:</strong> " + site_license + "</p>"
+	aboutContent += "<h2>Author</h2>"
+	aboutContent += "<p><strong>Name:</strong> " + author_name + "</p>"
+	aboutContent += "<p><strong>Bio:</strong> " + author_bio + "</p>"
+	aboutContent += "<p><strong>Links:</strong></p><ul>"
+
+	for _, link := range author_links {
+		aboutContent += "<li><a href='" + link + "'>" + link + "</a></li>"
+	}
+
+	aboutContent += "</ul>"
+	aboutContent += "<h2>Plugins</h2>"
+
+	// search for plugin directories
+	plugins, _ := filepath.Glob("./plugins/*")
+	for _, plugin := range plugins {
+		// read the plugin.json file
+		file, _ := os.Open(plugin + "/plugin.json")
+		defer file.Close()
+		decoder := json.NewDecoder(file)
+		var pluginData map[string]string
+		decoder.Decode(&pluginData)
+
+		// add the plugin information to the about page content
+		aboutContent += "<h3>" + pluginData["plugin_name"] + "</h3>"
+		aboutContent += "<p><strong>Description:</strong> " + pluginData["plugin_description"] + "</p>"
+		aboutContent += "<p><strong>Author:</strong> " + pluginData["plugin_author"] + "</p>"
+		aboutContent += "<p><strong>Link:</strong> <a href='" + pluginData["plugin_link"] + "'>" + pluginData["plugin_link"] + "</a></p>"
+		aboutContent += "<p><strong>License:</strong> " + pluginData["plugin_license"] + "</p>"
+	}
+
+	// combine the header, about page content, and footer
+	fmt.Fprintln(htmlFile, string(header)+aboutContent+string(footer))
+
 }

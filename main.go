@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	_ "embed"
 	"encoding/json"
 	"flag"
 	"fmt"
@@ -18,40 +17,6 @@ import (
 	"github.com/russross/blackfriday"
 )
 
-// embedding the templates
-var (
-	//go:embed templates/header.html
-	headerHTML string
-	//go:embed templates/footer.html
-	footerHTML string
-)
-
-// paths
-var (
-	inFolder       = "./markdown"  // your markdown articles go in here
-	outFolder      = "./output"    // your rendered html will end up here
-	templateFolder = "./templates" // your header and footer go here
-	pluginsFolder  = "./plugins"   // your plugins go here
-)
-
-// config
-var (
-
-	// author vars
-	author_name  = "@donuts-are-good"
-	author_bio   = "i like Go and jelly filled pastries :)"
-	author_links = []string{
-		"https://github.com/donuts-are-good/",
-		"https://github.com/donuts-are-good/bearclaw",
-	}
-
-	// content vars
-	site_name        = "bearclaw blog"
-	site_description = "a blog about a tiny static site generator in Go!"
-	site_link        = "https://" + "bearclaw.blog"
-	site_license     = "MIT License " + author_name + " " + site_link
-)
-
 // init runs before main()
 func init() {
 
@@ -62,6 +27,7 @@ func init() {
 	if createFoldersErr != nil {
 		log.Println(createFoldersErr)
 	}
+	FindZips(pluginsFolder)
 
 }
 
@@ -98,6 +64,7 @@ func main() {
 // recreateHeaderFooterFiles recreates the header and footer files
 // if we're rebuilding the templates, we'll need these.
 func recreateHeaderFooterFiles(templatesFolder string) error {
+
 	headerFile, err := os.Create(templatesFolder + "/header.html")
 	if err != nil {
 		return err
@@ -169,18 +136,24 @@ func watchFoldersForChanges(folders []string) {
 
 // createFolders takes a list of folders and checks for them to exist, and creates them if they don't exist.
 func createFolders(folders []string) error {
+
 	for _, folder := range folders {
+
 		if _, err := os.Stat(folder); os.IsNotExist(err) {
+
 			err = os.MkdirAll(folder, os.ModePerm)
 			if err != nil {
 				return err
 			}
+
 			if folder == "templates" {
+
 				err = recreateHeaderFooterFiles(folder)
 				if err != nil {
 					return err
 				}
 			}
+
 		}
 	}
 	return nil
@@ -291,6 +264,7 @@ func createPostList(inFolder, outFolder, templateFolder string) {
 	// combine them
 	fmt.Fprintln(htmlFile, string(header)+postList+string(footer))
 }
+
 func createAboutPage(outFolder, templateFolder string) error {
 
 	// create the about file
@@ -346,7 +320,7 @@ func createAboutPage(outFolder, templateFolder string) error {
 				return err
 			}
 
-			pluginsSection += "<li>" + pluginData["plugin_name"] + " by " + pluginData["plugin_author"] + " - " + pluginData["plugin_description"] + "</li>"
+			pluginsSection += "<li>" + pluginData["plugin_name"] + " v" + pluginData["plugin_version"] + " by " + pluginData["plugin_author"] + " - " + pluginData["plugin_description"] + "<br>" + pluginData["plugin_license"] + "<br>" + pluginData["plugin_link"] + "</li>"
 		}
 		pluginsSection += "</ul>"
 	}

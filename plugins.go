@@ -2,13 +2,77 @@ package main
 
 import (
 	"archive/zip"
-	"fmt"
 	"io"
 	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
 )
+
+func FindZips(folderPath string) error {
+
+	files, err := os.ReadDir(folderPath)
+	if err != nil {
+		return err
+	}
+
+	// loop through the files in the plugins dir
+	for _, file := range files {
+
+		// just look at the zips
+		if filepath.Ext(file.Name()) == ".zip" {
+
+			// open each zip file
+			zipFilePath := filepath.Join(folderPath, file.Name())
+			r, err := zip.OpenReader(zipFilePath)
+			if err != nil {
+				return err
+			}
+			defer r.Close()
+
+			// extract properly
+			for _, zipFile := range r.File {
+
+				// get just the name, no extension
+				fpath := filepath.Join(folderPath, strings.TrimSuffix(file.Name(), ".zip"))
+
+				// handle directories
+				if zipFile.FileInfo().IsDir() {
+					if strings.HasPrefix(zipFile.Name, fpath) {
+						continue
+					}
+					fpath = filepath.Join(fpath, filepath.Base(zipFile.Name))
+					os.MkdirAll(fpath, os.ModePerm)
+					continue
+				}
+				if err = os.MkdirAll(fpath, os.ModePerm); err != nil {
+					return err
+				}
+				readcloser, err := zipFile.Open()
+				if err != nil {
+					return err
+				}
+				defer readcloser.Close()
+
+				destFile, err := os.Create(filepath.Join(fpath, filepath.Base(zipFile.Name)))
+				if err != nil {
+					return err
+				}
+				defer destFile.Close()
+
+				if _, err = io.Copy(destFile, readcloser); err != nil {
+					return err
+				}
+			}
+
+			// delete the zip after we're done.
+			if err = os.Remove(zipFilePath); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
 
 func ScanForPluginCalls(html string) (string, error) {
 
@@ -32,95 +96,4 @@ func ScanForPluginCalls(html string) (string, error) {
 	}
 
 	return html, nil
-}
-
-func ExtractPlugins() error {
-
-	// get the list of files in the plugins folder
-	files, err := os.ReadDir(pluginsFolder)
-	if err != nil {
-		return err
-	}
-
-	// loop through each file
-	for _, file := range files {
-
-		// check if the file is a zip file
-		if filepath.Ext(file.Name()) == ".zip" {
-
-			// open the zip file
-			zipReader, err := zip.OpenReader(pluginsFolder + "/" + file.Name())
-			if err != nil {
-				return err
-			}
-
-			defer zipReader.Close()
-
-			// loop through each file in the zip
-			for _, zipFile := range zipReader.File {
-				destination := pluginsFolder + "/" + zipFile.Name
-				if _, err := os.Stat(destination); err == nil {
-					// ask the user if they want to overwrite the file
-					fmt.Printf("%s already exists. Would you like to overwrite it? (y/n)\n", destination)
-					var response string
-					fmt.Scanln(&response)
-					if response != "y" {
-						continue
-					}
-				}
-
-				// extract the file to the plugins folder
-				err = extractFile(zipFile, pluginsFolder)
-				if err != nil {
-					return err
-				}
-
-			}
-
-			// delete the zip file
-			err = os.Remove(pluginsFolder + "/" + file.Name())
-			if err != nil {
-				return err
-			}
-
-		}
-	}
-	return nil
-}
-
-func extractFile(file *zip.File, pluginsFolder string) error {
-
-	// get the file info
-	fileInfo := file.FileInfo()
-
-	// create the destination file path
-	destinationFilePath := filepath.Join(pluginsFolder, file.Name)
-
-	// create the destination directory
-	err := os.MkdirAll(filepath.Dir(destinationFilePath), fileInfo.Mode())
-	if err != nil {
-		return err
-	}
-
-	// open the source file
-	sourceFile, err := file.Open()
-	if err != nil {
-		return err
-	}
-	defer sourceFile.Close()
-
-	// create the destination file
-	destinationFile, err := os.OpenFile(destinationFilePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, fileInfo.Mode())
-	if err != nil {
-		return err
-	}
-	defer destinationFile.Close()
-
-	// copy the source file to the destination file
-	_, err = io.Copy(destinationFile, sourceFile)
-	if err != nil {
-		return err
-	}
-
-	return nil
 }

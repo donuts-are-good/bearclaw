@@ -4,3 +4,5 @@ output/*
 BUILDS
 .DS_Store
 .Trash-1000
+plugins
+*.zip

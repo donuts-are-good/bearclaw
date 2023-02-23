@@ -48,6 +48,12 @@ func FindZips(folderPath string) error {
 				if err = os.MkdirAll(fpath, os.ModePerm); err != nil {
 					return err
 				}
+
+				// skip nonsense files
+				if strings.HasPrefix(zipFile.Name, "._") {
+					continue
+				}
+
 				readcloser, err := zipFile.Open()
 				if err != nil {
 					return err

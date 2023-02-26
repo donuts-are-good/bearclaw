@@ -9,7 +9,6 @@ Below are the people who've starred this repo. Without them it'd still get done,
 
 (supporter grid generated with [donuts-are-good/starchart](https://github.com/donuts-are-good/starchart) )
 
-
 [![](https://avatars.githubusercontent.com/u/96031819?v=4&s=48)](https://github.com/donuts-are-good "donuts-are-good")
 [![](https://avatars.githubusercontent.com/u/71332326?v=4&s=48)](https://github.com/insolitum "insolitum")
 [![](https://avatars.githubusercontent.com/u/33086936?v=4&s=48)](https://github.com/mpldr "mpldr")
@@ -25,6 +24,20 @@ Below are the people who've starred this repo. Without them it'd still get done,
 [![](https://avatars.githubusercontent.com/u/50343470?v=4&s=48)](https://github.com/luigibarbato "luigibarbato")
 [![](https://avatars.githubusercontent.com/u/5232965?v=4&s=48)](https://github.com/zamicol "zamicol")
 [![](https://avatars.githubusercontent.com/u/79346588?v=4&s=48)](https://github.com/TheShuckduck "TheShuckduck")
+[![](https://avatars.githubusercontent.com/u/217?v=4&s=48)](https://github.com/tkersey "tkersey")
+[![](https://avatars.githubusercontent.com/u/353918?v=4&s=48)](https://github.com/itwars "itwars")
+[![](https://avatars.githubusercontent.com/u/56121656?v=4&s=48)](https://github.com/iamcais "iamcais")
+[![](https://avatars.githubusercontent.com/u/23299193?v=4&s=48)](https://github.com/f1729 "f1729")
+[![](https://avatars.githubusercontent.com/u/945075?v=4&s=48)](https://github.com/frankalicious "frankalicious")
+[![](https://avatars.githubusercontent.com/u/6848736?v=4&s=48)](https://github.com/roberthodapp "roberthodapp")
+[![](https://avatars.githubusercontent.com/u/28896876?v=4&s=48)](https://github.com/simulationguest "simulationguest")
+[![](https://avatars.githubusercontent.com/u/3662693?v=4&s=48)](https://github.com/RodrigoHahn "RodrigoHahn")
+[![](https://avatars.githubusercontent.com/u/5847?v=4&s=48)](https://github.com/Apreche "Apreche")
+[![](https://avatars.githubusercontent.com/u/31969517?v=4&s=48)](https://github.com/zubayrrr "zubayrrr")
+[![](https://avatars.githubusercontent.com/u/9178352?v=4&s=48)](https://github.com/mrjk05 "mrjk05")
+[![](https://avatars.githubusercontent.com/u/3390639?v=4&s=48)](https://github.com/vorons "vorons")
+[![](https://avatars.githubusercontent.com/u/320397?v=4&s=48)](https://github.com/roycifer "roycifer")
+
 
 ## what's a static site generator
 a static site is a site with no fancy clicky things, signups, comments, just plain html. writing a raw html page for your blog makes it load very fast, but there's a lot of typing involved when designing it. markdown is a simpler and faster way to write pages, and bearclaw converts those markdown files to html for you, with your style template. 

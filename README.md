@@ -9,34 +9,35 @@ Below are the people who've starred this repo. Without them it'd still get done,
 
 (supporter grid generated with [donuts-are-good/starchart](https://github.com/donuts-are-good/starchart) )
 
-[![](https://avatars.githubusercontent.com/u/96031819?v=4&s=48)](https://github.com/donuts-are-good "donuts-are-good")
-[![](https://avatars.githubusercontent.com/u/71332326?v=4&s=48)](https://github.com/insolitum "insolitum")
-[![](https://avatars.githubusercontent.com/u/33086936?v=4&s=48)](https://github.com/mpldr "mpldr")
-[![](https://avatars.githubusercontent.com/u/83341867?v=4&s=48)](https://github.com/ramenbased "ramenbased")
-[![](https://avatars.githubusercontent.com/u/68368?v=4&s=48)](https://github.com/qbit "qbit")
-[![](https://avatars.githubusercontent.com/u/16841626?v=4&s=48)](https://github.com/horvski "horvski")
-[![](https://avatars.githubusercontent.com/u/26520924?v=4&s=48)](https://github.com/ZinRicky "ZinRicky")
-[![](https://avatars.githubusercontent.com/u/6362698?v=4&s=48)](https://github.com/ralgozino "ralgozino")
-[![](https://avatars.githubusercontent.com/u/7098804?v=4&s=48)](https://github.com/MattDemers "MattDemers")
-[![](https://avatars.githubusercontent.com/u/11037782?v=4&s=48)](https://github.com/jgbrwn "jgbrwn")
-[![](https://avatars.githubusercontent.com/u/68560840?v=4&s=48)](https://github.com/TakenMC "TakenMC")
-[![](https://avatars.githubusercontent.com/u/16906103?v=4&s=48)](https://github.com/kondanna "kondanna")
-[![](https://avatars.githubusercontent.com/u/50343470?v=4&s=48)](https://github.com/luigibarbato "luigibarbato")
-[![](https://avatars.githubusercontent.com/u/5232965?v=4&s=48)](https://github.com/zamicol "zamicol")
-[![](https://avatars.githubusercontent.com/u/79346588?v=4&s=48)](https://github.com/TheShuckduck "TheShuckduck")
-[![](https://avatars.githubusercontent.com/u/217?v=4&s=48)](https://github.com/tkersey "tkersey")
-[![](https://avatars.githubusercontent.com/u/353918?v=4&s=48)](https://github.com/itwars "itwars")
-[![](https://avatars.githubusercontent.com/u/56121656?v=4&s=48)](https://github.com/iamcais "iamcais")
-[![](https://avatars.githubusercontent.com/u/23299193?v=4&s=48)](https://github.com/f1729 "f1729")
-[![](https://avatars.githubusercontent.com/u/945075?v=4&s=48)](https://github.com/frankalicious "frankalicious")
-[![](https://avatars.githubusercontent.com/u/6848736?v=4&s=48)](https://github.com/roberthodapp "roberthodapp")
-[![](https://avatars.githubusercontent.com/u/28896876?v=4&s=48)](https://github.com/simulationguest "simulationguest")
-[![](https://avatars.githubusercontent.com/u/3662693?v=4&s=48)](https://github.com/RodrigoHahn "RodrigoHahn")
-[![](https://avatars.githubusercontent.com/u/5847?v=4&s=48)](https://github.com/Apreche "Apreche")
-[![](https://avatars.githubusercontent.com/u/31969517?v=4&s=48)](https://github.com/zubayrrr "zubayrrr")
-[![](https://avatars.githubusercontent.com/u/9178352?v=4&s=48)](https://github.com/mrjk05 "mrjk05")
-[![](https://avatars.githubusercontent.com/u/3390639?v=4&s=48)](https://github.com/vorons "vorons")
-[![](https://avatars.githubusercontent.com/u/320397?v=4&s=48)](https://github.com/roycifer "roycifer")
+<a href="https://github.com/donuts-are-good"><img src="https://avatars.githubusercontent.com/u/96031819?v=4&amp;s=48" alt="donuts-are-good" width="48" height="48"></a>
+<a href="https://github.com/insolitum"><img src="https://avatars.githubusercontent.com/u/71332326?v=4&amp;s=48" alt="insolitum" width="48" height="48"></a>
+<a href="https://github.com/mpldr"><img src="https://avatars.githubusercontent.com/u/33086936?v=4&amp;s=48" alt="mpldr" width="48" height="48"></a>
+<a href="https://github.com/ramenbased"><img src="https://avatars.githubusercontent.com/u/83341867?v=4&amp;s=48" alt="ramenbased" width="48" height="48"></a>
+<a href="https://github.com/qbit"><img src="https://avatars.githubusercontent.com/u/68368?v=4&amp;s=48" alt="qbit" width="48" height="48"></a>
+<a href="https://github.com/horvski"><img src="https://avatars.githubusercontent.com/u/16841626?v=4&amp;s=48" alt="horvski" width="48" height="48"></a>
+<a href="https://github.com/ZinRicky"><img src="https://avatars.githubusercontent.com/u/26520924?v=4&amp;s=48" alt="ZinRicky" width="48" height="48"></a>
+<a href="https://github.com/ralgozino"><img src="https://avatars.githubusercontent.com/u/6362698?v=4&amp;s=48" alt="ralgozino" width="48" height="48"></a>
+<a href="https://github.com/MattDemers"><img src="https://avatars.githubusercontent.com/u/7098804?v=4&amp;s=48" alt="MattDemers" width="48" height="48"></a>
+<a href="https://github.com/jgbrwn"><img src="https://avatars.githubusercontent.com/u/11037782?v=4&amp;s=48" alt="jgbrwn" width="48" height="48"></a>
+<a href="https://github.com/TakenMC"><img src="https://avatars.githubusercontent.com/u/68560840?v=4&amp;s=48" alt="TakenMC" width="48" height="48"></a>
+<a href="https://github.com/kondanna"><img src="https://avatars.githubusercontent.com/u/16906103?v=4&amp;s=48" alt="kondanna" width="48" height="48"></a>
+<a href="https://github.com/luigibarbato"><img src="https://avatars.githubusercontent.com/u/50343470?v=4&amp;s=48" alt="luigibarbato" width="48" height="48"></a>
+<a href="https://github.com/zamicol"><img src="https://avatars.githubusercontent.com/u/5232965?v=4&amp;s=48" alt="zamicol" width="48" height="48"></a>
+<a href="https://github.com/TheShuckduck"><img src="https://avatars.githubusercontent.com/u/79346588?v=4&amp;s=48" alt="TheShuckduck" width="48" height="48"></a>
+<a href="https://github.com/tkersey"><img src="https://avatars.githubusercontent.com/u/217?v=4&amp;s=48" alt="tkersey" width="48" height="48"></a>
+<a href="https://github.com/itwars"><img src="https://avatars.githubusercontent.com/u/353918?v=4&amp;s=48" alt="itwars" width="48" height="48"></a>
+<a href="https://github.com/iamcais"><img src="https://avatars.githubusercontent.com/u/56121656?v=4&amp;s=48" alt="iamcais" width="48" height="48"></a>
+<a href="https://github.com/f1729"><img src="https://avatars.githubusercontent.com/u/23299193?v=4&amp;s=48" alt="f1729" width="48" height="48"></a>
+<a href="https://github.com/frankalicious"><img src="https://avatars.githubusercontent.com/u/945075?v=4&amp;s=48" alt="frankalicious" width="48" height="48"></a>
+<a href="https://github.com/roberthodapp"><img src="https://avatars.githubusercontent.com/u/6848736?v=4&amp;s=48" alt="roberthodapp" width="48" height="48"></a>
+<a href="https://github.com/simulationguest"><img src="https://avatars.githubusercontent.com/u/28896876?v=4&amp;s=48" alt="simulationguest" width="48" height="48"></a>
+<a href="https://github.com/RodrigoHahn"><img src="https://avatars.githubusercontent.com/u/3662693?v=4&amp;s=48" alt="RodrigoHahn" width="48" height="48"></a>
+<a href="https://github.com/Apreche"><img src="https://avatars.githubusercontent.com/u/5847?v=4&amp;s=48" alt="Apreche" width="48" height="48"></a>
+<a href="https://github.com/zubayrrr"><img src="https://avatars.githubusercontent.com/u/31969517?v=4&amp;s=48" alt="zubayrrr" width="48" height="48"></a>
+<a href="https://github.com/mrjk05"><img src="https://avatars.githubusercontent.com/u/9178352?v=4&amp;s=48" alt="mrjk05" width="48" height="48"></a>
+<a href="https://github.com/vorons"><img src="https://avatars.githubusercontent.com/u/3390639?v=4&amp;s=48" alt="vorons" width="48" height="48"></a>
+<a href="https://github.com/roycifer"><img src="https://avatars.githubusercontent.com/u/320397?v=4&amp;s=48" alt="roycifer" width="48" height="48"></a>
+
 
 
 ## what's a static site generator

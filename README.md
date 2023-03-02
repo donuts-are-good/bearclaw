@@ -61,7 +61,7 @@ First, download the [bearclaw executable](https://github.com/donuts-are-good/bea
 
 then create a folder:
 ```
-cd your_folder
+cd your_bearclaw_folder
 ```
 
 either have the bearclaw executable in that folder, or set it up in your $PATH, to be able to call `./bearclaw ` from any folder.
@@ -72,7 +72,7 @@ Either way, run the command once to generate the folder structure: :
 ```
 and you get:
 ```
-yourbearclawfolder
+your_bearclaw_folder
 ├── markdown
 ├── output
 │   ├── about.html
@@ -97,10 +97,27 @@ bearclaw will swap the comment for the contents of the plugin file at the specif
 
 ### Example
 
-MyBlogPost
+**MyBlogPost.md**
 ```markdown
 
+# My title
+
+Some text ...
+
+<!-- plugin "./plugins/myCoolPlugin/draft.html" -->
+
 ```
+
+with **plugins/draft.html**
+
+```html
+<div id="draft">
+  <h4>Draft in Progress</
+</div>
+<hr id="draft-hr" />
+```
+enables for example to add an html element that can be targeted specifically with CSS for special styling. 
+You could also inject javascript, all sorts of content that bearclaw does not support natively. 
 
 ## issues
 

@@ -1,11 +1,9 @@
 package main
 
 import (
-	"bufio"
 	"encoding/json"
 	"flag"
 	"fmt"
-	"io"
 	"log"
 	"net/url"
 	"os"
@@ -14,12 +12,10 @@ import (
 	"strings"
 
 	"github.com/fsnotify/fsnotify"
-	"github.com/russross/blackfriday"
 )
 
 // init runs before main()
 func init() {
-
 	// we are making a list of folders here to check for the presence of
 	// if they don't exist, we create them
 	foldersToCreate := []string{inFolder, outFolder, templateFolder, pluginsFolder}
@@ -28,11 +24,9 @@ func init() {
 		log.Println(createFoldersErr)
 	}
 	FindZips(pluginsFolder)
-
 }
 
 func main() {
-
 	// check to see if the user ran with --watch
 	watchFlag := flag.Bool("watch", false, "watch the current directory for changes")
 	flag.Parse()
@@ -58,13 +52,11 @@ func main() {
 	markdownToHTML(inFolder, outFolder, templateFolder)
 	createPostList(inFolder, outFolder, templateFolder)
 	createAboutPage(outFolder, templateFolder)
-
 }
 
 // recreateHeaderFooterFiles recreates the header and footer files
 // if we're rebuilding the templates, we'll need these.
 func recreateHeaderFooterFiles(templatesFolder string) error {
-
 	headerFile, err := os.Create(templatesFolder + "/header.html")
 	if err != nil {
 		return err
@@ -88,7 +80,6 @@ func recreateHeaderFooterFiles(templatesFolder string) error {
 }
 
 func watchFoldersForChanges(folders []string) {
-
 	// range through the watched files
 	for _, folder := range folders {
 
@@ -104,7 +95,6 @@ func watchFoldersForChanges(folders []string) {
 		// make a channel for goroutine messaging
 		done := make(chan bool)
 		go func() {
-
 			// for { ev ... ver }
 			for {
 				select {
@@ -136,9 +126,7 @@ func watchFoldersForChanges(folders []string) {
 
 // createFolders takes a list of folders and checks for them to exist, and creates them if they don't exist.
 func createFolders(folders []string) error {
-
 	for _, folder := range folders {
-
 		if _, err := os.Stat(folder); os.IsNotExist(err) {
 
 			err = os.MkdirAll(folder, os.ModePerm)
@@ -159,57 +147,8 @@ func createFolders(folders []string) error {
 	return nil
 }
 
-// markdownToHTML converts markdown documents to HTML
-func markdownToHTML(inFolder, outFolder, templateFolder string) {
-	files, _ := os.ReadDir(inFolder)
-
-	for _, file := range files {
-
-		// only markdown files
-		if filepath.Ext(file.Name()) == ".md" {
-
-			// open the selected markdown file
-			markdownFile, _ := os.Open(inFolder + "/" + file.Name())
-
-			// don't forget to close it when done
-			defer markdownFile.Close()
-
-			// create the html file
-			htmlFile, _ := os.Create(outFolder + "/" + file.Name() + ".html")
-			defer htmlFile.Close()
-
-			// read the md
-			reader := bufio.NewReader(markdownFile)
-			markdown, _ := io.ReadAll(reader)
-
-			// send the md to blackfriday
-			html := blackfriday.MarkdownCommon(markdown)
-
-			// read in our templates
-			header, _ := os.ReadFile(templateFolder + "/header.html")
-			footer, _ := os.ReadFile(templateFolder + "/footer.html")
-
-			// assemble in order
-			completeHTML := string(header) + strings.TrimSpace(string(html)) + string(footer)
-
-			// pass the assembled html into ScanForPluginCalls
-			htmlAfterPlugins, htmlAfterPluginsErr := ScanForPluginCalls(completeHTML)
-			if htmlAfterPluginsErr != nil {
-				log.Println("error inserting plugin content: ", htmlAfterPluginsErr)
-				log.Println("returning content without plugin...")
-
-				// if there's an error, let's just take the html from before the error and use that.
-				htmlAfterPlugins = completeHTML
-			}
-
-			fmt.Fprintln(htmlFile, htmlAfterPlugins)
-		}
-	}
-}
-
 // createPostList creates the page that has a list of all of your posts
 func createPostList(inFolder, outFolder, templateFolder string) {
-
 	// read the files in the directory
 	files, _ := os.ReadDir(inFolder)
 
@@ -225,7 +164,6 @@ func createPostList(inFolder, outFolder, templateFolder string) {
 
 	// for all files...
 	for _, file := range files {
-
 		// if it is a markdown file...
 		if filepath.Ext(file.Name()) == ".md" {
 
@@ -237,15 +175,12 @@ func createPostList(inFolder, outFolder, templateFolder string) {
 			postList += "<li><a href='" + url.PathEscape(file.Name()) + ".html'>" + title + "</a></li>"
 
 		}
-
 	}
 
 	// if there are more than 0 posts make an RSS feed
 	if len(files) > 0 {
-
 		// generate the rss feed
 		CreateXMLRSSFeed(inFolder, outFolder)
-
 	}
 
 	// end the list
@@ -266,7 +201,6 @@ func createPostList(inFolder, outFolder, templateFolder string) {
 }
 
 func createAboutPage(outFolder, templateFolder string) error {
-
 	// create the about file
 	aboutFile, err := os.Create(outFolder + "/about.html")
 	if err != nil {

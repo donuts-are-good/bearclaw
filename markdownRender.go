@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"fmt"
 	"io"
 	"log"
 	"os"
@@ -12,11 +13,16 @@ import (
 	"sync"
 
 	"github.com/russross/blackfriday"
+	"mpldr.codes/ansi"
 )
 
 // markdownToHTML converts markdown documents to HTML
 func markdownToHTML(inFolder, outFolder, templateFolder string) {
-	files, _ := os.ReadDir(inFolder)
+	files, err := os.ReadDir(inFolder)
+	if err != nil {
+		fmt.Printf("%s: couldn't read '%s': %v\n", ansi.Bold(ansi.Red("ERROR")), inFolder, err)
+		return
+	}
 
 	var wg sync.WaitGroup
 	input := make(chan string, 128)
@@ -40,9 +46,17 @@ func markdownToHTML(inFolder, outFolder, templateFolder string) {
 }
 
 func fileProcessor(input <-chan string, inFolder, outFolder, templateFolder string) {
-	header, _ := os.ReadFile(path.Join(templateFolder, "header.html"))
-	footer, _ := os.ReadFile(path.Join(templateFolder, "footer.html"))
-	// FIXME: do literally any kind of error handling
+	header, err := os.ReadFile(path.Join(templateFolder, "header.html"))
+	if err != nil {
+		fmt.Printf("%s: couldn't read 'header.html': %v\n", ansi.Bold(ansi.Red("ERROR")), err)
+		return
+	}
+
+	footer, err := os.ReadFile(path.Join(templateFolder, "footer.html"))
+	if err != nil {
+		fmt.Printf("%s: couldn't read 'footer.html': %v\n", ansi.Bold(ansi.Red("ERROR")), err)
+		return
+	}
 
 	result := bytes.NewBuffer(make([]byte, 4096))
 
@@ -50,14 +64,29 @@ func fileProcessor(input <-chan string, inFolder, outFolder, templateFolder stri
 		result.Reset()
 
 		// open the selected markdown file
-		markdownFile, _ := os.Open(path.Join(inFolder, infile))
+		markdownFile, err := os.Open(path.Join(inFolder, infile))
+		if err != nil {
+			fmt.Printf("%s: couldn't read '%s': %v\n", ansi.Bold(ansi.Red("ERROR")), infile, err)
+			continue
+		}
 
 		// create the html file
-		htmlFile, _ := os.Create(path.Join(outFolder, infile+".html"))
+		htmlFile, err := os.Create(path.Join(outFolder, infile+".html"))
+		if err != nil {
+			fmt.Printf("%s: couldn't create '%s': %v\n", ansi.Bold(ansi.Red("ERROR")), infile+".html", err)
+			markdownFile.Close()
+			continue
+		}
 
 		// read the md
 		reader := bufio.NewReader(markdownFile)
-		markdown, _ := io.ReadAll(reader)
+		markdown, err := io.ReadAll(reader)
+		if err != nil {
+			fmt.Printf("%s: couldn't read from '%s': %v\n", ansi.Bold(ansi.Red("ERROR")), infile+".html", err)
+			markdownFile.Close()
+			htmlFile.Close()
+			continue
+		}
 
 		// send the md to blackfriday
 		html := blackfriday.MarkdownCommon(markdown)
@@ -70,9 +99,9 @@ func fileProcessor(input <-chan string, inFolder, outFolder, templateFolder stri
 		// pass the assembled html into ScanForPluginCalls
 		var resultCopy []byte
 		copy(resultCopy, result.Bytes())
-		htmlAfterPlugins, htmlAfterPluginsErr := ScanForPluginCalls(result.Bytes())
-		if htmlAfterPluginsErr != nil {
-			log.Println("error inserting plugin content: ", htmlAfterPluginsErr)
+		htmlAfterPlugins, err := ScanForPluginCalls(result.Bytes())
+		if err != nil {
+			fmt.Printf("%s: error parsing plugin in '%s': %v\n", ansi.Bold(ansi.Red("ERROR")), infile+".html", err)
 			log.Println("returning content without plugin...")
 
 			// if there's an error, let's just take the html from before the error and use that.

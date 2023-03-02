@@ -1,4 +1,4 @@
-module bearclaw
+module github.com/donuts-are-good/bearclaw
 
 go 1.19
 

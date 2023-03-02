@@ -2,6 +2,7 @@ package main
 
 import (
 	"archive/zip"
+	"bytes"
 	"io"
 	"os"
 	"path/filepath"
@@ -10,7 +11,6 @@ import (
 )
 
 func FindZips(folderPath string) error {
-
 	files, err := os.ReadDir(folderPath)
 	if err != nil {
 		return err
@@ -18,7 +18,6 @@ func FindZips(folderPath string) error {
 
 	// loop through the files in the plugins dir
 	for _, file := range files {
-
 		// just look at the zips
 		if filepath.Ext(file.Name()) == ".zip" {
 
@@ -80,25 +79,23 @@ func FindZips(folderPath string) error {
 	return nil
 }
 
-func ScanForPluginCalls(html string) (string, error) {
-
+func ScanForPluginCalls(html []byte) ([]byte, error) {
 	// regexp to find the plugin call
 	re := regexp.MustCompile(`<!-- plugin "(.+)" -->`)
-	matches := re.FindAllStringSubmatch(html, -1)
+	matches := re.FindAllSubmatch(html, -1)
 	if len(matches) == 0 {
-
 		// we probably messed up the plugins call, or it didn't match anything.
 		return html, nil
 	}
 
 	// swap the plugin calls for the content of the plugin file
 	for _, match := range matches {
-		filePath := match[1]
+		filePath := string(match[1])
 		fileContent, err := os.ReadFile(filePath)
 		if err != nil {
-			return "", err
+			return nil, err
 		}
-		html = strings.Replace(html, match[0], string(fileContent), -1)
+		html = bytes.Replace(html, match[0], fileContent, -1)
 	}
 
 	return html, nil

@@ -4,3 +4,5 @@ github.com/russross/blackfriday v1.6.0 h1:KqfZb0pUVN2lYqZUYRddxF4OR8ZMURnJIG5Y3V
 github.com/russross/blackfriday v1.6.0/go.mod h1:ti0ldHuxg49ri4ksnFxlkCfN+hvslNlmVHqNRXXJNAY=
 golang.org/x/sys v0.0.0-20220908164124-27713097b956 h1:XeJjHH1KiLpKGb6lvMiksZ9l0fVUh+AmGcm0nOMEBOY=
 golang.org/x/sys v0.0.0-20220908164124-27713097b956/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+mpldr.codes/ansi v1.5.0 h1:jAAtDMwU/DC7OPxmrVFpmM3RrSQDcMeLhuk6BuEoWZc=
+mpldr.codes/ansi v1.5.0/go.mod h1:SYuKX0r6nxvySxMxzQX9frQaKLjEqKapjjg17euonMc=

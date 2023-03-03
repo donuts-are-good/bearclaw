@@ -26,12 +26,71 @@ bearclaw can be run on-demand, or it can rebuild automatically when it sees chan
 - **templates** - header.html and footer.html
 - ***plugins*** *(optional)* - extra features for your page
 
+### How to init a bearclaw
+*As of bearclaw 1.2.0alpha*
+
+#### Linux
+First, download the [bearclaw executable](https://github.com/donuts-are-good/bearclaw/releases)
+
+then create a folder:
+```
+cd your_bearclaw_folder
+```
+
+either have the bearclaw executable in that folder, or set it up in your $PATH, to be able to call `./bearclaw ` from any folder.
+Either way, run the command once to generate the folder structure: :
+
+```
+./bearclaw
+```
+and you get:
+```
+your_bearclaw_folder
+├── markdown
+├── output
+│   ├── about.html
+│   └── posts.html
+├── plugins
+└── templates
+```
+
 that's it! point your webserver at `output` or handle it however is best for your case.
 
-**tip:** you can run `bearclaw` and it will run once, or you can use `./bearclaw --watch` to watch the current folder for changes.
+**tip:** you can run `./bearclaw` and it will run once, or you can use `./bearclaw --watch` to watch the current folder for changes.
 
 ## plugins
-bearclaw supports plugins. plugins can be installed in the plugins folder and called in your markdown or html pages using an html comment like this: `<!-- plugin "./plugins/myCoolPlugin/comments.html" -->`. bearclaw will swap the comment for the contents of the plugin file at the specified path.
+bearclaw supports plugins. 
+plugins should be added to the `plugins` folder.
+
+To call a plugin in your markdown or html pages, use an html comment like this: 
+```
+<!-- plugin "./plugins/myCoolPlugin/comments.html" -->
+```
+bearclaw will swap the comment for the contents of the plugin file at the specified path.
+
+### Example
+
+**MyBlogPost.md**
+```markdown
+
+# My title
+
+Some text ...
+
+<!-- plugin "./plugins/myCoolPlugin/draft.html" -->
+
+```
+
+with **plugins/draft.html**
+
+```html
+<div id="draft">
+  <h4>Draft in Progress</
+</div>
+<hr id="draft-hr" />
+```
+enables for example to add an html element that can be targeted specifically with CSS for special styling. 
+You could also inject javascript, all sorts of content that bearclaw does not support natively. 
 
 ## issues
 

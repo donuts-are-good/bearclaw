@@ -99,14 +99,11 @@ func watchFoldersForChanges(folders []string) {
 			for {
 				select {
 				case event := <-watcher.Events:
-					if event.Op&fsnotify.Write == fsnotify.Write {
 
-						// if there's an event, remark and rebuild
-						log.Println("modified:", event.Name, " - rebuilding files..")
-						markdownToHTML(inFolder, outFolder, templateFolder)
-						createPostList(inFolder, outFolder, templateFolder)
-
-					}
+					// if there's an event, remark and rebuild
+					log.Println("modified:", event.Name, " - rebuilding files..")
+					markdownToHTML(inFolder, outFolder, templateFolder)
+					createPostList(inFolder, outFolder, templateFolder)
 
 					// if we get an error instead of event, announce it
 				case err := <-watcher.Errors:

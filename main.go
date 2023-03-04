@@ -239,7 +239,7 @@ func checkFlags() {
 	flag.StringVar(&templateFolder, "templates", templateFolder, "the templates folder for header and footer html files")
 	flag.StringVar(&pluginsFolder, "plugins", pluginsFolder, "the plugins folder for plugins")
 
-	watchFlag := flag.Bool("watch", false, "watch the current directory for changes")
+	watchFlag := flag.Bool("watch", false, "watch the content directories for changes")
 	flag.Parse()
 
 	isWatching = *watchFlag

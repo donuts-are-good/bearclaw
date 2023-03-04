@@ -56,7 +56,7 @@ your_bearclaw_folder
 
 that's it! point your webserver at `output` or handle it however is best for your case.
 
-**tip:** you can run `./bearclaw` and it will run once, or you can use `./bearclaw --watch` to watch the current folder for changes.
+**tip:** you can run `./bearclaw` and it will run once, or you can use `./bearclaw --watch` to watch the folders for changes.
 
 ## plugins
 bearclaw supports plugins. 

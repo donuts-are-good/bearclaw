@@ -16,23 +16,43 @@ import (
 
 // init runs before main()
 func init() {
+
+	// scan for or make a config file
+	loadConfig()
+
+	// scaffold out the folders we need to operate
+	scaffold()
+
+	// look for plugin zips
+	FindZips(pluginsFolder)
+
+}
+
+// scaffold will look for and/or create the necessary folders
+func scaffold() {
+
 	// we are making a list of folders here to check for the presence of
 	// if they don't exist, we create them
 	foldersToCreate := []string{inFolder, outFolder, templateFolder, pluginsFolder}
 	createFoldersErr := createFolders(foldersToCreate)
 	if createFoldersErr != nil {
-		log.Println(createFoldersErr)
+		log.Fatalf("couldn't create a necessary folder: %v", createFoldersErr)
 	}
-	FindZips(pluginsFolder)
+
 }
 
+// checkFlags looks at the run flags like --output when we start up
 func checkFlags() {
+
 	flag.StringVar(&inFolder, "input", inFolder, "the input folder for markdown files")
 	flag.StringVar(&outFolder, "output", outFolder, "the output folder for html files")
 	flag.StringVar(&templateFolder, "templates", templateFolder, "the templates folder for header and footer html files")
 	flag.StringVar(&pluginsFolder, "plugins", pluginsFolder, "the plugins folder for plugins")
 
+	watchFlag := flag.Bool("watch", false, "watch the current directory for changes")
 	flag.Parse()
+
+	isWatching = *watchFlag
 
 	// there is some concern whether there is potential for infinite write loop
 	// when using --watch and setting your folders to the same directory
@@ -42,27 +62,15 @@ func checkFlags() {
 	// this should prevent that.
 	if inFolder == outFolder || inFolder == templateFolder || inFolder == pluginsFolder || outFolder == templateFolder || outFolder == pluginsFolder || templateFolder == pluginsFolder {
 		message := "Error: The input, output, templates, and plugins folders must be different directories"
-		log.Panicln(message)
+		log.Fatalf(message)
 	}
-}
 
-func main() {
-
-	// chek for directory variable overrides
-	checkFlags()
-
-	// check to see if the user ran with --watch
-	watchFlag := flag.Bool("watch", false, "watch the current directory for changes")
-	flag.Parse()
-
-	// if they did...
-	if *watchFlag {
-
+	if isWatching {
 		// make a list of folders to keep an eye on
 		foldersToWatch := []string{templateFolder, inFolder}
 
 		// the process to watch it goes in a goroutine
-		go watchFoldersForChanges(foldersToWatch)
+		watchFoldersForChanges(foldersToWatch)
 
 		// give the user some type of confirmation
 		fmt.Println("Waiting for changes: ", foldersToWatch)
@@ -76,6 +84,13 @@ func main() {
 	markdownToHTML(inFolder, outFolder, templateFolder)
 	createPostList(inFolder, outFolder, templateFolder)
 	createAboutPage(outFolder, templateFolder)
+}
+
+func main() {
+
+	// chek for directory variable overrides
+	checkFlags()
+
 }
 
 // recreateHeaderFooterFiles recreates the header and footer files
@@ -102,46 +117,38 @@ func recreateHeaderFooterFiles(templatesFolder string) error {
 
 	return nil
 }
+func watchFolderForChange(folder string) {
+
+	// make a watcher with fsnotify
+	watcher, err := fsnotify.NewWatcher()
+	if err != nil {
+		log.Fatalf("unable to watch %s : %v", folder, err)
+	}
+	defer watcher.Close()
+
+	err = watcher.Add(folder)
+	if err != nil {
+		log.Fatalf("couldn't add a watcher: %v", err)
+	}
+
+	for {
+		select {
+		case event := <-watcher.Events:
+			log.Println("modified:", event.Name, " - rebuilding files..")
+			markdownToHTML(inFolder, outFolder, templateFolder)
+			createPostList(inFolder, outFolder, templateFolder)
+		case err := <-watcher.Errors:
+			log.Println("error:", err)
+		}
+	}
+}
 
 func watchFoldersForChanges(folders []string) {
 	// range through the watched files
 	for _, folder := range folders {
 
-		// create a new watcher for each watched folder
-		watcher, err := fsnotify.NewWatcher()
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		// don't forget to close it
-		defer watcher.Close()
-
-		// make a channel for goroutine messaging
-		done := make(chan bool)
-		go func() {
-			// for { ev ... ver }
-			for {
-				select {
-				case event := <-watcher.Events:
-
-					// if there's an event, remark and rebuild
-					log.Println("modified:", event.Name, " - rebuilding files..")
-					markdownToHTML(inFolder, outFolder, templateFolder)
-					createPostList(inFolder, outFolder, templateFolder)
-
-					// if we get an error instead of event, announce it
-				case err := <-watcher.Errors:
-					log.Println("error:", err)
-
-				}
-			}
-		}()
-
-		err = watcher.Add(folder)
-		if err != nil {
-			log.Fatal(err)
-		}
-		<-done
+		// watch the individual folder
+		go watchFolderForChange(folder)
 	}
 }
 
@@ -172,7 +179,10 @@ func createFolders(folders []string) error {
 func createPostList(inFolder, outFolder, templateFolder string) {
 
 	// read the files in the directory
-	files, _ := os.ReadDir(inFolder)
+	files, filesErr := os.ReadDir(inFolder)
+	if filesErr != nil {
+		log.Fatalf("unable to read posts directory: %v", filesErr)
+	}
 
 	// sort them by mod time
 	sort.Slice(files, func(i, j int) bool {

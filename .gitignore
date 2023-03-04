@@ -6,3 +6,5 @@ BUILDS
 .Trash-1000
 plugins
 *.zip
+site.config
+tools

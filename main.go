@@ -28,64 +28,6 @@ func init() {
 
 }
 
-// scaffold will look for and/or create the necessary folders
-func scaffold() {
-
-	// we are making a list of folders here to check for the presence of
-	// if they don't exist, we create them
-	foldersToCreate := []string{inFolder, outFolder, templateFolder, pluginsFolder}
-	createFoldersErr := createFolders(foldersToCreate)
-	if createFoldersErr != nil {
-		log.Fatalf("couldn't create a necessary folder: %v", createFoldersErr)
-	}
-
-}
-
-// checkFlags looks at the run flags like --output when we start up
-func checkFlags() {
-
-	flag.StringVar(&inFolder, "input", inFolder, "the input folder for markdown files")
-	flag.StringVar(&outFolder, "output", outFolder, "the output folder for html files")
-	flag.StringVar(&templateFolder, "templates", templateFolder, "the templates folder for header and footer html files")
-	flag.StringVar(&pluginsFolder, "plugins", pluginsFolder, "the plugins folder for plugins")
-
-	watchFlag := flag.Bool("watch", false, "watch the current directory for changes")
-	flag.Parse()
-
-	isWatching = *watchFlag
-
-	// there is some concern whether there is potential for infinite write loop
-	// when using --watch and setting your folders to the same directory
-	// the assumption is that if you're outputting your built html to a
-	// 'watched' directory, fsnotify will trigger a rebuild each time a build
-	// deposits files into the watched directory.
-	// this should prevent that.
-	if inFolder == outFolder || inFolder == templateFolder || inFolder == pluginsFolder || outFolder == templateFolder || outFolder == pluginsFolder || templateFolder == pluginsFolder {
-		message := "Error: The input, output, templates, and plugins folders must be different directories"
-		log.Fatalf(message)
-	}
-
-	if isWatching {
-		// make a list of folders to keep an eye on
-		foldersToWatch := []string{templateFolder, inFolder}
-
-		// the process to watch it goes in a goroutine
-		watchFoldersForChanges(foldersToWatch)
-
-		// give the user some type of confirmation
-		fmt.Println("Waiting for changes: ", foldersToWatch)
-
-		// select {} is a blocking operation that keeps
-		// the program from closing
-		select {}
-	}
-
-	// now, if nothing has gone wrong, we process the html
-	markdownToHTML(inFolder, outFolder, templateFolder)
-	createPostList(inFolder, outFolder, templateFolder)
-	createAboutPage(outFolder, templateFolder)
-}
-
 func main() {
 
 	// chek for directory variable overrides
@@ -117,6 +59,9 @@ func recreateHeaderFooterFiles(templatesFolder string) error {
 
 	return nil
 }
+
+// watchFolderForChange will watch an individual folder for
+// any type of change, then trigger a rebuild
 func watchFolderForChange(folder string) {
 
 	// make a watcher with fsnotify
@@ -143,36 +88,17 @@ func watchFolderForChange(folder string) {
 	}
 }
 
+// watchFoldersForChanges loops through a list of folders and
+// passes them to watchFolderForChange
 func watchFoldersForChanges(folders []string) {
+
 	// range through the watched files
 	for _, folder := range folders {
 
 		// watch the individual folder
 		go watchFolderForChange(folder)
 	}
-}
 
-// createFolders takes a list of folders and checks for them to exist, and creates them if they don't exist.
-func createFolders(folders []string) error {
-	for _, folder := range folders {
-		if _, err := os.Stat(folder); os.IsNotExist(err) {
-
-			err = os.MkdirAll(folder, os.ModePerm)
-			if err != nil {
-				return err
-			}
-
-			if folder == "templates" {
-
-				err = recreateHeaderFooterFiles(folder)
-				if err != nil {
-					return err
-				}
-			}
-
-		}
-	}
-	return nil
 }
 
 // createPostList creates the page that has a list of all of your posts
@@ -234,6 +160,7 @@ func createPostList(inFolder, outFolder, templateFolder string) {
 }
 
 func createAboutPage(outFolder, templateFolder string) error {
+
 	// create the about file
 	aboutFile, err := os.Create(outFolder + "/about.html")
 	if err != nil {
@@ -302,4 +229,49 @@ func createAboutPage(outFolder, templateFolder string) error {
 	fmt.Fprintln(aboutFile, string(header)+siteExplainer+siteName+siteDesc+siteLink+siteLicense+authorExplainer+authorName+authorBio+authorLinks+pluginsSection+string(footer))
 
 	return nil
+}
+
+// checkFlags looks at the run flags like --output when we start up
+func checkFlags() {
+
+	flag.StringVar(&inFolder, "input", inFolder, "the input folder for markdown files")
+	flag.StringVar(&outFolder, "output", outFolder, "the output folder for html files")
+	flag.StringVar(&templateFolder, "templates", templateFolder, "the templates folder for header and footer html files")
+	flag.StringVar(&pluginsFolder, "plugins", pluginsFolder, "the plugins folder for plugins")
+
+	watchFlag := flag.Bool("watch", false, "watch the current directory for changes")
+	flag.Parse()
+
+	isWatching = *watchFlag
+
+	// there is some concern whether there is potential for infinite write loop
+	// when using --watch and setting your folders to the same directory
+	// the assumption is that if you're outputting your built html to a
+	// 'watched' directory, fsnotify will trigger a rebuild each time a build
+	// deposits files into the watched directory.
+	// this should prevent that.
+	if inFolder == outFolder || inFolder == templateFolder || inFolder == pluginsFolder || outFolder == templateFolder || outFolder == pluginsFolder || templateFolder == pluginsFolder {
+		message := "Error: The input, output, templates, and plugins folders must be different directories"
+		log.Fatalf(message)
+	}
+
+	if isWatching {
+		// make a list of folders to keep an eye on
+		foldersToWatch := []string{templateFolder, inFolder}
+
+		// the process to watch it goes in a goroutine
+		watchFoldersForChanges(foldersToWatch)
+
+		// give the user some type of confirmation
+		fmt.Println("Waiting for changes: ", foldersToWatch)
+
+		// select {} is a blocking operation that keeps
+		// the program from closing
+		select {}
+	}
+
+	// now, if nothing has gone wrong, we process the html
+	markdownToHTML(inFolder, outFolder, templateFolder)
+	createPostList(inFolder, outFolder, templateFolder)
+	createAboutPage(outFolder, templateFolder)
 }

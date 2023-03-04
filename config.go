@@ -272,3 +272,39 @@ func validateConfigFile(siteConfigPath string) bool {
 
 	return true
 }
+
+// scaffold will look for and/or create the necessary folders
+func scaffold() {
+
+	// we are making a list of folders here to check for the presence of
+	// if they don't exist, we create them
+	foldersToCreate := []string{inFolder, outFolder, templateFolder, pluginsFolder}
+	createFoldersErr := createFolders(foldersToCreate)
+	if createFoldersErr != nil {
+		log.Fatalf("couldn't create a necessary folder: %v", createFoldersErr)
+	}
+
+}
+
+// createFolders takes a list of folders and checks for them to exist, and creates them if they don't exist.
+func createFolders(folders []string) error {
+	for _, folder := range folders {
+		if _, err := os.Stat(folder); os.IsNotExist(err) {
+
+			err = os.MkdirAll(folder, os.ModePerm)
+			if err != nil {
+				return err
+			}
+
+			if folder == "templates" {
+
+				err = recreateHeaderFooterFiles(folder)
+				if err != nil {
+					return err
+				}
+			}
+
+		}
+	}
+	return nil
+}

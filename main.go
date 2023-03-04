@@ -149,6 +149,7 @@ func createFolders(folders []string) error {
 
 // createPostList creates the page that has a list of all of your posts
 func createPostList(inFolder, outFolder, templateFolder string) {
+
 	// read the files in the directory
 	files, _ := os.ReadDir(inFolder)
 
@@ -160,7 +161,9 @@ func createPostList(inFolder, outFolder, templateFolder string) {
 	})
 
 	// unordered list
-	postList := "<ul>"
+	postList := "<b class=\"info\">all posts</b><br><span class=\"text-muted\"><em><small>sorted by recently modified</small></em></span>"
+
+	postList += "<ul>"
 
 	// for all files...
 	for _, file := range files {
@@ -171,7 +174,6 @@ func createPostList(inFolder, outFolder, templateFolder string) {
 			title := strings.TrimSuffix(file.Name(), filepath.Ext(file.Name()))
 
 			// put it on the list with the html
-			// postList += "<li><a href='" + file.Name() + ".html'>" + title + "</a></li>"
 			postList += "<li><a href='" + url.PathEscape(file.Name()) + ".html'>" + title + "</a></li>"
 
 		}
@@ -187,7 +189,7 @@ func createPostList(inFolder, outFolder, templateFolder string) {
 	postList += "</ul>"
 
 	// create the posts file
-	htmlFile, _ := os.Create(outFolder + "/posts.html")
+	htmlFile, _ := os.Create(outFolder + "/index.html")
 
 	// don't forget to close it
 	defer htmlFile.Close()
@@ -218,20 +220,26 @@ func createAboutPage(outFolder, templateFolder string) error {
 		return err
 	}
 
+	// explainer text for the about.html page
+	// the way this entire function is structured could be a lot better
+	// it's not that it's wrong, it's just messy and ugly
+	siteExplainer := "<b class=\"info\">about this site</b><br>"
+
 	// content vars
-	siteName := "<h1>" + site_name + "</h1>"
-	siteDesc := "<p>" + site_description + "</p>"
-	siteLink := "<p><a href='" + site_link + "'>" + site_link + "</a></p>"
-	siteLicense := "<p>" + site_license + "</p>"
+	siteName := "name:&ensp;" + site_name + "<br>"
+	siteDesc := "bio:&ensp;" + site_description + "<br>"
+	siteLink := "url:&ensp;<a href='" + site_link + "'>" + site_link + "</a><br>"
+	siteLicense := "license:&ensp;" + site_license + "<br><br><br>"
 
 	// author vars
-	authorName := "<h2>" + author_name + "</h2>"
-	authorBio := "<p>" + author_bio + "</p>"
-	authorLinks := "<ul>"
+	authorExplainer := "<b class=\"info\">author information</b><br>"
+	authorName := "name:&ensp;" + author_name + "<br>"
+	authorBio := "bio:&ensp;" + author_bio + "<br>"
+	authorLinks := "author links:"
 	for _, link := range author_links {
-		authorLinks += "<li><a href='" + link + "'>" + link + "</a></li>"
+		authorLinks += "<br>👉&emsp;<a href='" + link + "'>" + link + "</a>"
 	}
-	authorLinks += "</ul>"
+	authorLinks += "<br><br>"
 
 	// plugin vars
 	pluginsSection := ""
@@ -240,7 +248,7 @@ func createAboutPage(outFolder, templateFolder string) error {
 		return err
 	}
 	if len(plugins) > 0 {
-		pluginsSection = "<h2>Plugins</h2><ul>"
+		pluginsSection = "<b>plugin credits</b>"
 		for _, plugin := range plugins {
 			file, err := os.Open(pluginsFolder + "/" + plugin.Name() + "/plugin.json")
 			if err != nil {
@@ -260,7 +268,7 @@ func createAboutPage(outFolder, templateFolder string) error {
 	}
 
 	// combine the content and write to the about file
-	fmt.Fprintln(aboutFile, string(header)+siteName+siteDesc+siteLink+siteLicense+authorName+authorBio+authorLinks+pluginsSection+string(footer))
+	fmt.Fprintln(aboutFile, string(header)+siteExplainer+siteName+siteDesc+siteLink+siteLicense+authorExplainer+authorName+authorBio+authorLinks+pluginsSection+string(footer))
 
 	return nil
 }

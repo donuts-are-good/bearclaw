@@ -23,7 +23,7 @@ var (
 
 	// author vars
 	author_name  = "@donuts-are-good"
-	author_bio   = "i like Go and jelly filled pastries :)"
+	author_bio   = "open source enthusiast, author of bearclaw, professional coffee sipper and world-renowned pastry smuggler :)"
 	author_links = []string{
 		"https://github.com/donuts-are-good/",
 		"https://github.com/donuts-are-good/bearclaw",
@@ -33,5 +33,5 @@ var (
 	site_name        = "bearclaw blog"
 	site_description = "a blog about a tiny static site generator in Go!"
 	site_link        = "https://" + "bearclaw.blog"
-	site_license     = "MIT License " + author_name + " " + site_link
+	site_license     = "MIT License"
 )

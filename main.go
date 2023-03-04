@@ -26,7 +26,31 @@ func init() {
 	FindZips(pluginsFolder)
 }
 
+func checkFlags() {
+	flag.StringVar(&inFolder, "input", inFolder, "the input folder for markdown files")
+	flag.StringVar(&outFolder, "output", outFolder, "the output folder for html files")
+	flag.StringVar(&templateFolder, "templates", templateFolder, "the templates folder for header and footer html files")
+	flag.StringVar(&pluginsFolder, "plugins", pluginsFolder, "the plugins folder for plugins")
+
+	flag.Parse()
+
+	// there is some concern whether there is potential for infinite write loop
+	// when using --watch and setting your folders to the same directory
+	// the assumption is that if you're outputting your built html to a
+	// 'watched' directory, fsnotify will trigger a rebuild each time a build
+	// deposits files into the watched directory.
+	// this should prevent that.
+	if inFolder == outFolder || inFolder == templateFolder || inFolder == pluginsFolder || outFolder == templateFolder || outFolder == pluginsFolder || templateFolder == pluginsFolder {
+		message := "Error: The input, output, templates, and plugins folders must be different directories"
+		log.Panicln(message)
+	}
+}
+
 func main() {
+
+	// chek for directory variable overrides
+	checkFlags()
+
 	// check to see if the user ran with --watch
 	watchFlag := flag.Bool("watch", false, "watch the current directory for changes")
 	flag.Parse()

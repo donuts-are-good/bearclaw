@@ -8,3 +8,4 @@ plugins
 *.zip
 site.config
 tools
+*.patch

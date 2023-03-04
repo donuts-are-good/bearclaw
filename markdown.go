@@ -51,7 +51,6 @@ func fileProcessor(input <-chan string, inFolder, outFolder, templateFolder stri
 		fmt.Printf("%s: couldn't read 'header.html': %v\n", ansi.Bold(ansi.Red("ERROR")), err)
 		return
 	}
-
 	footer, err := os.ReadFile(path.Join(templateFolder, "footer.html"))
 	if err != nil {
 		fmt.Printf("%s: couldn't read 'footer.html': %v\n", ansi.Bold(ansi.Red("ERROR")), err)
@@ -61,6 +60,8 @@ func fileProcessor(input <-chan string, inFolder, outFolder, templateFolder stri
 	result := bytes.NewBuffer(make([]byte, 4096))
 
 	for infile := range input {
+
+		log.Println("Processing:\t", infile)
 		result.Reset()
 
 		// open the selected markdown file
@@ -97,7 +98,9 @@ func fileProcessor(input <-chan string, inFolder, outFolder, templateFolder stri
 		result.Write(footer)
 
 		// pass the assembled html into ScanForPluginCalls
-		var resultCopy []byte
+		// var resultCopy []byte
+
+		resultCopy := make([]byte, result.Len())
 		copy(resultCopy, result.Bytes())
 		htmlAfterPlugins, err := ScanForPluginCalls(result.Bytes())
 		if err != nil {

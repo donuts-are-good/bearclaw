@@ -37,13 +37,11 @@ type RSSFeed struct {
 }
 
 func CreateXMLRSSFeed(inFolder, outFolder string) {
-
 	// get the posts we have
 	files, _ := os.ReadDir(inFolder)
 
 	// most recently modified file comes first
 	sort.Slice(files, func(i, j int) bool {
-
 		// get info for each file in the list
 		fi, _ := os.Stat(inFolder + "/" + files[i].Name())
 		fj, _ := os.Stat(inFolder + "/" + files[j].Name())
@@ -71,10 +69,10 @@ func CreateXMLRSSFeed(inFolder, outFolder string) {
 			if err != nil {
 				continue
 			}
-			defer markdownFile.Close()
 
 			reader := bufio.NewReader(markdownFile)
 			markdown, err := io.ReadAll(reader)
+			markdownFile.Close()
 			if err != nil {
 				continue
 			}

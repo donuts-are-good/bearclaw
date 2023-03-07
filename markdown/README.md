@@ -19,23 +19,23 @@ you don't need to learn any templating languages, you just drop in your markdown
 no frameworks, no node-modules, no react, no fancy stuff or cool emojis. it just works.
 
 ## how do I use it?
-step by step [instructions are here](getting-started.md) 
+step by step [instructions are here](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/getting-started.md) 
 
 ## the bearclaw guide
 
 this readme is just a taste. for a deeper dive into more topics, click a link below, or look in your `bearclaw/markdown` folder!
 
-- [bearclaw origins](bearclaw-origins.md)
-- [bearclaw philosophy](bearclaw-philosophy.md)
-- [system requirements](system-requirements.md)
-- [building from source](building-from-source.md)
-- [join bearclaw](join-bearclaw.md) 
-- [code styleguide](code-styleguide.md)
-- [brand guide](brand-guide.md)
-- [getting started](getting-started.md)
-- [advanced options](advanced-options.md)
-- [using site.config](using-site-config.md)
-- [plugin basics](plugin-basics.md)
-- [writing plugins](writing-plugins.md)
-- [thanks](thanks.md)
-- [donate](donate.md)
+- [bearclaw origins](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/bearclaw-origins.md)
+- [bearclaw philosophy](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/bearclaw-philosophy.md)
+- [system requirements](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/system-requirements.md)
+- [building from source](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/building-from-source.md)
+- [join bearclaw](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/join-bearclaw.md) 
+- [code styleguide](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/code-styleguide.md)
+- [brand guide](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/brand-guide.md)
+- [getting started](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/getting-started.md)
+- [advanced options](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/advanced-options.md)
+- [using site.config](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/using-site-config.md)
+- [plugin basics](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/plugin-basics.md)
+- [writing plugins](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/writing-plugins.md)
+- [thanks](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/thanks.md)
+- [donate](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/donate.md)

@@ -4,7 +4,6 @@ import (
 	"archive/zip"
 	"bytes"
 	"io"
-	"log"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -81,7 +80,6 @@ func FindZips(folderPath string) error {
 }
 
 func ScanForPluginCalls(html []byte) ([]byte, error) {
-	log.Println("Processing:\t plugin calls")
 	// regexp to find the plugin call
 	re := regexp.MustCompile(`<!-- plugin "(.+)" -->`)
 	matches := re.FindAllSubmatch(html, -1)

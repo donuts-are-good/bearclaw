@@ -1,14 +1,8 @@
 ![bearclaw](https://user-images.githubusercontent.com/96031819/218302524-121cd81a-b552-45e5-b46e-5689bbf08390.png)
 ![donuts-are-good's followers](https://img.shields.io/github/followers/donuts-are-good?&color=555&style=for-the-badge&label=followers) ![donuts-are-good's stars](https://img.shields.io/github/stars/donuts-are-good?affiliations=OWNER%2CCOLLABORATOR&color=555&style=for-the-badge) ![donuts-are-good's visitors](https://komarev.com/ghpvc/?username=donuts-are-good&color=555555&style=for-the-badge&label=visitors)
 ## bearclaw - fast and easy website generator
-*Click a thumbnail to view as a full size image*
-index.html, about.html, credits.html
 
-<p>
-    <center>
-    <img style="height:200px; object-fit: scale-down;" src="https://user-images.githubusercontent.com/96031819/218305635-75bdf421-e412-4b90-9f4a-26947219bf51.png"> <img style="height:200px; object-fit: scale-down;" src="https://user-images.githubusercontent.com/96031819/218305635-75bdf421-e412-4b90-9f4a-26947219bf51.png"> <img style="height:200px; object-fit: scale-down;" src="https://user-images.githubusercontent.com/96031819/218305635-75bdf421-e412-4b90-9f4a-26947219bf51.png">
-    </center>
-</p>
+<img style="height:200px; object-fit: scale-down;" src="https://user-images.githubusercontent.com/96031819/223292313-40fe8342-6040-4e7d-8302-8df461dc5a52.png"><img style="height:200px; object-fit: scale-down;" src="https://user-images.githubusercontent.com/96031819/223292663-a3c271d0-496a-4ccf-843d-323168173a3d.png"><img style="height:200px; object-fit: scale-down;" src="https://user-images.githubusercontent.com/96031819/223292991-7acb5de6-4ece-462c-891e-5be234f5c9f8.png">
 
 
 ## why do I want this?

@@ -24,4 +24,4 @@ none of this is saying "hey you, unknown person, do work for free then bestow it
 
 if you think bearclaw is cool, and you think you have some opinions that can help out, it'd be great to have you. 
 
-# [<< Go back](README.md)
+# [<< Go back](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/README.md)

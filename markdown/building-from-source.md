@@ -49,4 +49,4 @@ the Go compiler doesn't really output anything, you just run it, and if it doesn
 
 if you need help, there is a way to submit a request for aid called "issues". [leave a message here](https://github.com/donuts-are-good/bearclaw/issues/new/choose) and someone will respond.
 
-# [<< Go back](README.md)
+# [<< Go back](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/README.md)

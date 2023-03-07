@@ -50,4 +50,4 @@ this is the folder where your templates go if you wanted to add others for theme
 example: `./bearclaw --watch`
 watch your templates and markdown folders for changes. 
 
-# [<< Go back](README.md)
+# [<< Go back](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/README.md)

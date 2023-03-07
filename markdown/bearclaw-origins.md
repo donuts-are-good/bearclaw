@@ -21,4 +21,4 @@ normally html with something like bootstrap is quick enough to write by hand, an
 
 those changes took very little time to put together, so rather than actually start writing articles, i figured id make bearclaw this week's project. fast forward to today, it's still going, so here we are.
 
-# [<< Go back](README.md)
+# [<< Go back](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/README.md)

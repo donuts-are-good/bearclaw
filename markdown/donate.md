@@ -4,4 +4,4 @@ bearclaw used to have donation addresses for bitcoin and monero. at the time it 
 
 if you still want to give, and you want to support bearclaw, pick any charity or any good deed, and go do it. find someone who needs help and dig them out of their hole. you don't have to name anybody or tell anybody why. 
 
-# [<< Go back](README.md)
+# [<< Go back](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/README.md)

@@ -22,4 +22,4 @@ don't use an inner folder like this:
     - github-fork.html
     - twitter-follow.html
 
-# [<< Go back](README.md)
+# [<< Go back](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/README.md)

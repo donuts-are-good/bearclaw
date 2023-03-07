@@ -76,4 +76,4 @@ bearclaw also uses `fsnotify` for the `--watch` feature to know when a file has 
 
 help others whenever possible. every suggestion and addition will bring up questions, and that's cool. most people aren't mind readers and most things you do in a group setting need to be 'sold' somewhat. it's cool.
 
-# [<< Go back](README.md)
+# [<< Go back](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/README.md)

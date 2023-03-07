@@ -55,4 +55,4 @@ just about any popular operating system other than os/2 or haiku should be fine.
 
 initial copies supported plan9, iirc, but i think it was fsnotify that handles the `--watch` option that killed that.
 
-# [<< Go back](README.md)
+# [<< Go back](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/README.md)

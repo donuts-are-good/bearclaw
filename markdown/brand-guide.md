@@ -35,4 +35,4 @@ bearclaw is tiny.
 
 bearclaw is not a network soup of requests on each pageload.
 
-# [<< Go back](README.md)
+# [<< Go back](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/README.md)

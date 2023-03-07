@@ -22,4 +22,4 @@ To call a plugin in your markdown pages, use a plugin comment like this:
 
 in our pagehits example, this should auto-insert our total page hits plugin every time we run `bearclaw`. bearclaw will try and rebuild everything in `markdown` folder every time it is run.
 
-# [<< Go back](README.md)
+# [<< Go back](https://github.com/donuts-are-good/bearclaw/blob/master/markdown/README.md)

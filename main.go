@@ -161,33 +161,39 @@ func createPostList(inFolder, outFolder, templateFolder string) {
 
 func createAboutPage(outFolder, templateFolder string) error {
 
+	log.Println("outFolder: ", outFolder)
+	log.Println("templateFolder: ", templateFolder)
+
 	// create the about file
-	aboutFile, err := os.Create(outFolder + "/about.html")
-	if err != nil {
-		return err
+	aboutFile, pluginErr := os.Create(outFolder + "/about.html")
+	if pluginErr != nil {
+		log.Println("aboutFile: ", pluginErr)
+		return pluginErr
 	}
-	defer aboutFile.Close()
 
 	// read the header/footer templates
-	header, err := os.ReadFile(templateFolder + "/header.html")
-	if err != nil {
-		return err
+	header, pluginErr := os.ReadFile(templateFolder + "/header.html")
+	if pluginErr != nil {
+		return pluginErr
 	}
-	footer, err := os.ReadFile(templateFolder + "/footer.html")
-	if err != nil {
-		return err
+	footer, pluginErr := os.ReadFile(templateFolder + "/footer.html")
+	if pluginErr != nil {
+		return pluginErr
 	}
 
 	// explainer text for the about.html page
 	// the way this entire function is structured could be a lot better
 	// it's not that it's wrong, it's just messy and ugly
 	siteExplainer := "<b class=\"info\">about this site</b><br>"
+	log.Println("siteExplainer", siteExplainer)
 
 	// content vars
 	siteName := "name:&ensp;" + site_name + "<br>"
 	siteDesc := "bio:&ensp;" + site_description + "<br>"
 	siteLink := "url:&ensp;<a href='" + site_link + "'>" + site_link + "</a><br>"
 	siteLicense := "license:&ensp;" + site_license + "<br><br><br>"
+
+	log.Println("site info:", siteName, siteDesc, siteLink, siteLicense)
 
 	// author vars
 	authorExplainer := "<b class=\"info\">author information</b><br>"
@@ -199,24 +205,31 @@ func createAboutPage(outFolder, templateFolder string) error {
 	}
 	authorLinks += "<br><br>"
 
+	log.Println("authorInfo: ", authorExplainer, authorName, authorBio, authorLinks)
 	// plugin vars
-	pluginsSection := ""
-	plugins, err := os.ReadDir(pluginsFolder)
-	if err != nil {
-		return err
+
+	pluginsSection := " "
+
+	plugins, pluginErr := os.ReadDir(pluginsFolder)
+	if pluginErr != nil {
+		log.Println("plugin err: ", pluginErr)
+		return pluginErr
 	}
+
 	if len(plugins) > 0 {
+		log.Println("plugins: ", len(plugins))
 		pluginsSection = "<b>plugin credits</b>"
 		for _, plugin := range plugins {
 			file, err := os.Open(pluginsFolder + "/" + plugin.Name() + "/plugin.json")
 			if err != nil {
+				log.Println("plugin error: ", err)
 				return err
 			}
-			defer file.Close()
 
 			var pluginData map[string]string
 			err = json.NewDecoder(file).Decode(&pluginData)
 			if err != nil {
+				log.Println("pluginData map: ", err)
 				return err
 			}
 
@@ -225,8 +238,13 @@ func createAboutPage(outFolder, templateFolder string) error {
 		pluginsSection += "</ul>"
 	}
 
+	log.Println("pluginSection: ", pluginsSection)
+
+	log.Println("writeline: ", aboutFile, string(header)+siteExplainer+siteName+siteDesc+siteLink+siteLicense+authorExplainer+authorName+authorBio+authorLinks+pluginsSection+string(footer))
 	// combine the content and write to the about file
 	fmt.Fprintln(aboutFile, string(header)+siteExplainer+siteName+siteDesc+siteLink+siteLicense+authorExplainer+authorName+authorBio+authorLinks+pluginsSection+string(footer))
+
+	aboutFile.Close()
 
 	return nil
 }
@@ -271,7 +289,8 @@ func checkFlags() {
 	}
 
 	// now, if nothing has gone wrong, we process the html
+	createAboutPage(outFolder, templateFolder)
+
 	markdownToHTML(inFolder, outFolder, templateFolder)
 	createPostList(inFolder, outFolder, templateFolder)
-	createAboutPage(outFolder, templateFolder)
 }

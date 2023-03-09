@@ -1,4 +1,4 @@
-![bearclaw](https://user-images.githubusercontent.com/96031819/218302524-121cd81a-b552-45e5-b46e-5689bbf08390.png)
+![bearclaw logo by Leechi](https://user-images.githubusercontent.com/96031819/224104857-fccacf94-5594-4e8c-819d-044a6df68e2f.jpg)
 ![donuts-are-good's followers](https://img.shields.io/github/followers/donuts-are-good?&color=555&style=for-the-badge&label=followers) ![donuts-are-good's stars](https://img.shields.io/github/stars/donuts-are-good?affiliations=OWNER%2CCOLLABORATOR&color=555&style=for-the-badge) ![donuts-are-good's visitors](https://komarev.com/ghpvc/?username=donuts-are-good&color=555555&style=for-the-badge&label=visitors)
 ## bearclaw - fast and easy website generator
 

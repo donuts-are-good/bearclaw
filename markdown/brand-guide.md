@@ -19,7 +19,9 @@ when asked for the logo character's name, a commenter in the gopher chat chimed 
 
 <img width="660" alt="image" src="https://user-images.githubusercontent.com/96031819/224110678-50e41b40-8233-4e17-a6ef-6c23d2cc62e3.png">
 
-and so it was.
+and so it was... until we were shoo'd/shew'd from the main gopher chat room for an unspecified reason 
+
+<img width="699" alt="image" src="https://user-images.githubusercontent.com/96031819/224133108-75f34d47-f74e-48fe-8b7b-275088c33d52.png">
 
 
 ## the old logo

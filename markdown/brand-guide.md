@@ -9,7 +9,20 @@ bearclaw got the name because my username is @donuts-are-good, and i just wanted
 obviously though the code is adequate, bearclaw isn't solving any of the great unknowns of humanity, so we need to rely on things that are cute and approachable to draw people in... let's do the donut thing.
 
 
-## the logo
+## the logo 
+
+you may or may not be a programmer, or even know what the Go programming language is, but there's a bit of a tradition of taking the Go gopher logo character and adapting it to suit the theme of your project. not to be shown up, my friend leechi put together a really cool beargopher in true Go tradition and i loved it so much it became our new logo :) thanks leechi!
+
+![image](https://user-images.githubusercontent.com/96031819/224132761-452136dc-4e5e-4d7c-a16c-4c85b5444b6f.png)
+
+when asked for the logo character's name, a commenter in the gopher chat chimed in with 'sneechi', in honor of the author 'leechi', to which leechi agreed. 
+
+<img width="660" alt="image" src="https://user-images.githubusercontent.com/96031819/224110678-50e41b40-8233-4e17-a6ef-6c23d2cc62e3.png">
+
+and so it was.
+
+
+## the old logo
 
 it's the bear emoji, because there's no donut specificity in the currrent emoji specification. the colors were chosen for being attractive, using whatever the first link for 'random color pallette palete pallete palette generator" returned and choosing the top-ranked color combo, skewed slightly to not look like it's dividing the letters.
 

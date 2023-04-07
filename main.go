@@ -131,8 +131,16 @@ func createPostList(inFolder, outFolder, templateFolder string) {
 			title := strings.TrimSuffix(file.Name(), filepath.Ext(file.Name()))
 
 			// put it on the list with the html
-			postList.WriteString("<li><a href='" + url.PathEscape(file.Name()) + ".html'>" + title + "</a></li>")
-
+			toWrite := []string{
+				"<li><a href='",
+				url.PathEscape(file.Name()),
+				".html'>",
+				title,
+				"</a></li>",
+			}
+			for _, v := range toWrite {
+				postList.WriteString(v)
+			}
 		}
 	}
 
@@ -251,7 +259,19 @@ func createAboutPage(outFolder, templateFolder string) error {
 				return err
 			}
 
-			pluginsSection.WriteString("<li>" + pluginData["plugin_name"] + " v" + pluginData["plugin_version"] + " by " + pluginData["plugin_author"] + " - " + pluginData["plugin_description"] + "<br>" + pluginData["plugin_license"] + "<br>" + pluginData["plugin_link"] + "</li>")
+			toWrite := []string{
+				"<li>",
+				pluginData["plugin_name"],
+				" v", pluginData["plugin_version"],
+				" by ", pluginData["plugin_author"],
+				" - ", pluginData["plugin_description"],
+				"<br>", pluginData["plugin_license"], "<br>",
+				pluginData["plugin_link"],
+				"</li",
+			}
+			for _, v := range toWrite {
+				pluginsSection.WriteString(v)
+			}
 		}
 		pluginsSection.WriteString("</ul>")
 	}

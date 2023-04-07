@@ -8,3 +8,4 @@ plugins
 site.config
 tools
 *.patch
+patches

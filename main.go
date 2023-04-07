@@ -240,7 +240,7 @@ func createAboutPage(outFolder, templateFolder string) error {
 
 	log.Println("pluginSection: ", pluginsSection)
 
-	log.Println("writeline: ", aboutFile, string(header)+siteExplainer+siteName+siteDesc+siteLink+siteLicense+authorExplainer+authorName+authorBio+authorLinks+pluginsSection+string(footer))
+	// log.Println("writeline: ", aboutFile, string(header)+siteExplainer+siteName+siteDesc+siteLink+siteLicense+authorExplainer+authorName+authorBio+authorLinks+pluginsSection+string(footer))
 	// combine the content and write to the about file
 	fmt.Fprintln(aboutFile, string(header)+siteExplainer+siteName+siteDesc+siteLink+siteLicense+authorExplainer+authorName+authorBio+authorLinks+pluginsSection+string(footer))
 

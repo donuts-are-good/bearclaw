@@ -17,6 +17,15 @@ var (
 	footerHTML string
 )
 
+type Author struct {
+	Name, Bio string
+	Links     []string
+}
+
+type Site struct {
+	Name, Description, Link, License string
+}
+
 // paths
 var (
 	inFolder       = "./markdown"  // your markdown articles go in here
@@ -33,16 +42,21 @@ var (
 	configFile = "site.config"
 
 	// author vars
-	author_name  = "@donuts-are-good"
-	author_bio   = "open source enthusiast, author of bearclaw, professional coffee sipper and world-renowned pastry smuggler :)"
-	author_links = []string{
-		"https://github.com/donuts-are-good/",
-		"https://github.com/donuts-are-good/bearclaw",
+	author = Author{
+		Name: "@donuts-are-good",
+		Bio:  "open source enthusiast, author of bearclaw, professional coffee sipper and world-renowned pastry smuggler :)",
+		Links: []string{
+			"https://github.com/donuts-are-good/",
+			"https://github.com/donuts-are-good/bearclaw",
+		},
 	}
-	site_name        = "bearclaw blog"
-	site_description = "a blog about a tiny static site generator in Go!"
-	site_link        = "https://" + "bearclaw.blog"
-	site_license     = "MIT License"
+	site = Site{
+		Name:        "bearclaw blog",
+		Description: "a blog about a tiny static site generator in Go!",
+		// TODO: simplify this
+		Link:    "https://" + "bearclaw.blog",
+		License: "MIT License",
+	}
 )
 
 func loadConfig() {
@@ -62,50 +76,50 @@ func loadConfig() {
 		fmt.Println("No config file found, please enter the following information:")
 
 		// prompt for username
-		author_name = promptUser("Author name (default: @donuts-are-good): ")
-		if author_name == "" {
-			author_name = "@donuts-are-good"
+		author.Name = promptUser("Author name (default: @donuts-are-good): ")
+		if author.Name == "" {
+			author.Name = "@donuts-are-good"
 		}
 
 		// prompt for author
-		author_bio = promptUser("Author bio (default: bearclaw author): ")
-		if author_bio == "" {
-			author_bio = "bearclaw author"
+		author.Bio = promptUser("Author bio (default: bearclaw author): ")
+		if author.Bio == "" {
+			author.Bio = "bearclaw author"
 		}
 
 		// prompt for author links
 		author_links_string := promptUser("Author links (default: https://github.com/donuts-are-good/, https://github.com/donuts-are-good/bearclaw): ")
 		if author_links_string == "" {
-			author_links = []string{
+			author.Links = []string{
 				"https://github.com/donuts-are-good/",
 				"https://github.com/donuts-are-good/bearclaw",
 			}
 		} else {
-			author_links = strings.Split(author_links_string, ",")
+			author.Links = strings.Split(author_links_string, ",")
 		}
 
 		// prompt for site name
-		site_name = promptUser("Site name (default: bearclaw blog): ")
-		if site_name == "" {
-			site_name = "bearclaw blog"
+		site.Name = promptUser("Site name (default: bearclaw blog): ")
+		if site.Name == "" {
+			site.Name = "bearclaw blog"
 		}
 
 		// prompt for site description
-		site_description = promptUser("Site description (default: a blog about a tiny static site generator in Go!): ")
-		if site_description == "" {
-			site_description = "a blog about a tiny static site generator in Go!"
+		site.Description = promptUser("Site description (default: a blog about a tiny static site generator in Go!): ")
+		if site.Description == "" {
+			site.Description = "a blog about a tiny static site generator in Go!"
 		}
 
 		// prompt for site link
-		site_link = promptUser("Site link (default: https://bearclaw.blog): ")
-		if site_link == "" {
-			site_link = "https://" + "bearclaw.blog"
+		site.Link = promptUser("Site link (default: https://bearclaw.blog): ")
+		if site.Link == "" {
+			site.Link = "https://" + "bearclaw.blog"
 		}
 
 		// prompt for site license
-		site_license = promptUser("Site license (default: MIT License): ")
-		if site_license == "" {
-			site_license = "MIT License"
+		site.License = promptUser("Site license (default: MIT License): ")
+		if site.License == "" {
+			site.License = "MIT License"
 		}
 
 		// we're missing some config values here, but this is mainly
@@ -122,7 +136,8 @@ func loadConfig() {
 		defer file.Close()
 
 		// write the config file
-		_, err = file.WriteString(fmt.Sprintf("author_name: %s\nauthor_bio: %s\nauthor_links: %s\nsite_name: %s\nsite_description: %s\nsite_link: %s\nsite_license: %s\n", author_name, author_bio, strings.Join(author_links, ","), site_name, site_description, site_link, site_license))
+		// TODO: simplify this
+		_, err = file.WriteString(fmt.Sprintf("author_name: %s\nauthor_bio: %s\nauthor_links %s\nsite_name: %s\nsite_description: %s\nsite_link %s\nsite_license: %s\n", author.Name, author.Bio, strings.Join(author.Links, ","), site.Name, site.Description, site.Link, site.License))
 		if err != nil {
 			log.Fatalf("could not write to config file: %v", err)
 		}
@@ -156,26 +171,26 @@ func loadConfig() {
 			key, value := strings.TrimSpace(kv[0]), strings.TrimSpace(kv[1])
 			switch key {
 			case "author_name":
-				author_name = value
+				author.Name = value
 			case "author_bio":
-				author_bio = value
+				author.Bio = value
 			case "author_links":
-				author_links = strings.Split(value, ",")
-				for i, link := range author_links {
-					author_links[i] = strings.TrimSpace(link)
+				author.Links = strings.Split(value, ",")
+				for i, link := range author.Links {
+					author.Links[i] = strings.TrimSpace(link)
 				}
 			case "site_name":
-				site_name = value
+				site.Name = value
 			case "site_description":
-				site_description = value
+				site.Description = value
 			case "site_link":
-				site_link = value
+				site.Link = value
 				// site_links = strings.Split(value, ",")
 				// for i, link := range site_links {
 				// 	site_links[i] = strings.TrimSpace(link)
 				// }
 			case "site_license":
-				site_license = value
+				site.License = value
 			}
 		}
 	}
@@ -212,13 +227,13 @@ func promptUser(message string) string {
 func validateConfig() bool {
 
 	// this could probably be better
-	return !(author_name == "" ||
-		author_bio == "" ||
-		len(author_links) == 0 ||
-		site_name == "" ||
-		site_description == "" ||
-		site_link == "" ||
-		site_license == "")
+	return !(author.Name == "" ||
+		author.Bio == "" ||
+		len(author.Links) == 0 ||
+		site.Name == "" ||
+		site.Description == "" ||
+		site.Link == "" ||
+		site.License == "")
 }
 
 // validateConfigFile is essentially the same as validateConfig, but

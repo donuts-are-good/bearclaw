@@ -188,19 +188,19 @@ func createAboutPage(outFolder, templateFolder string) error {
 	log.Println("siteExplainer", siteExplainer)
 
 	// content vars
-	siteName := "name:&ensp;" + site_name + "<br>"
-	siteDesc := "bio:&ensp;" + site_description + "<br>"
-	siteLink := "url:&ensp;<a href='" + site_link + "'>" + site_link + "</a><br>"
-	siteLicense := "license:&ensp;" + site_license + "<br><br><br>"
+	siteName := "name:&ensp;" + site.Name + "<br>"
+	siteDesc := "bio:&ensp;" + site.Description + "<br>"
+	siteLink := "url:&ensp;<a href='" + site.Link + "'>" + site.Link + "</a><br>"
+	siteLicense := "license:&ensp;" + site.License + "<br><br><br>"
 
 	log.Println("site info:", siteName, siteDesc, siteLink, siteLicense)
 
 	// author vars
 	authorExplainer := "<b class=\"info\">author information</b><br>"
-	authorName := "name:&ensp;" + author_name + "<br>"
-	authorBio := "bio:&ensp;" + author_bio + "<br>"
+	authorName := "name:&ensp;" + author.Name + "<br>"
+	authorBio := "bio:&ensp;" + author.Bio + "<br>"
 	authorLinks := "author links:"
-	for _, link := range author_links {
+	for _, link := range author.Links {
 		authorLinks += "<br>👉&emsp;<a href='" + link + "'>" + link + "</a>"
 	}
 	authorLinks += "<br><br>"

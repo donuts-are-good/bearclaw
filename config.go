@@ -75,33 +75,30 @@ func loadConfig() {
 		// if it doesn't exist, let's build it
 		fmt.Println("No config file found, please enter the following information:")
 
+		// copy site and author to use their fields as default values
+		// this might be pointless; if that's the case, feel free to remove it
+		default_author, default_site := author, site
 		// prompt for username
-		author.Name = promptUser("Author name", "@donuts-are-good")
+		author.Name = promptUser("Author name", default_author.Name)
 
 		// prompt for author
-		author.Bio = promptUser("Author bio", "bearclaw author")
+		author.Bio = promptUser("Author bio", default_author.Bio)
 
 		// prompt for author links
-		default_author_links := []string{
-			"https://github.com/donuts-are-good/",
-			"https://github.com/donuts-are-good/bearclaw",
-		}
-		default_author_links_string := strings.Join(default_author_links, ", ")
-		author_links_string := promptUser("Author links", default_author_links_string)
-
+		author_links_string := promptUser("Author links", strings.Join(default_author.Links, ","))
 		author.Links = strings.Split(author_links_string, ",")
 
 		// prompt for site name
-		site.Name = promptUser("Site name", "bearclaw blog")
+		site.Name = promptUser("Site name", default_site.Name)
 
 		// prompt for site description
-		site.Description = promptUser("Site description", "a blog about a tiny static site generator in Go!")
+		site.Description = promptUser("Site description", default_site.Description)
 
 		// prompt for site link
-		site.Link = promptUser("Site link", "https://bearclaw.blog")
+		site.Link = promptUser("Site link", default_site.Link)
 
 		// prompt for site license
-		site.License = promptUser("Site license", "MIT License")
+		site.License = promptUser("Site license", default_site.License)
 
 		// we're missing some config values here, but this is mainly
 		// to test whether this way of doing it works.

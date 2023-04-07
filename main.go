@@ -118,9 +118,9 @@ func createPostList(inFolder, outFolder, templateFolder string) {
 	})
 
 	// unordered list
-	postList := "<b class=\"info\">all posts</b><br><span class=\"text-muted\"><em><small>sorted by recently modified</small></em></span>"
-
-	postList += "<ul>"
+	var postList strings.Builder
+	postList.WriteString("<b class=\"info\">all posts</b><br><span class=\"text-muted\"><em><small>sorted by recently modified</small></em></span>")
+	postList.WriteString("<ul>")
 
 	// for all files...
 	for _, file := range files {
@@ -131,7 +131,7 @@ func createPostList(inFolder, outFolder, templateFolder string) {
 			title := strings.TrimSuffix(file.Name(), filepath.Ext(file.Name()))
 
 			// put it on the list with the html
-			postList += "<li><a href='" + url.PathEscape(file.Name()) + ".html'>" + title + "</a></li>"
+			postList.WriteString("<li><a href='" + url.PathEscape(file.Name()) + ".html'>" + title + "</a></li>")
 
 		}
 	}
@@ -143,7 +143,7 @@ func createPostList(inFolder, outFolder, templateFolder string) {
 	}
 
 	// end the list
-	postList += "</ul>"
+	postList.WriteString("</ul>")
 
 	// create the posts file
 	htmlFile, _ := os.Create(filepath.Join(outFolder, "index.html"))
@@ -156,7 +156,18 @@ func createPostList(inFolder, outFolder, templateFolder string) {
 	footer, _ := os.ReadFile(filepath.Join(templateFolder, "footer.html"))
 
 	// combine them
-	fmt.Fprintln(htmlFile, string(header)+postList+string(footer))
+	var (
+		output    strings.Builder
+		forOutput = []string{
+			string(header),
+			postList.String(),
+			string(footer),
+		}
+	)
+	for _, v := range forOutput {
+		output.WriteString(v)
+	}
+	fmt.Fprintln(htmlFile, output.String())
 }
 
 func createAboutPage(outFolder, templateFolder string) error {
@@ -208,7 +219,8 @@ func createAboutPage(outFolder, templateFolder string) error {
 	// log.Println("authorInfo: ", authorExplainer, authorName, authorBio, authorLinks)
 	// plugin vars
 
-	pluginsSection := " "
+	var pluginsSection strings.Builder
+	pluginsSection.WriteRune(' ')
 
 	plugins, pluginErr := os.ReadDir(pluginsFolder)
 	if pluginErr != nil {
@@ -223,7 +235,8 @@ func createAboutPage(outFolder, templateFolder string) error {
 		} else {
 			log.Printf("Extensions:\t %d plugins loaded", len(plugins))
 		}
-		pluginsSection = "<b>plugin credits</b>"
+		pluginsSection.Reset()
+		pluginsSection.WriteString("<b>plugin credits</b>")
 		for _, plugin := range plugins {
 			file, err := os.Open(filepath.Join(pluginsFolder, plugin.Name(), "plugin.json"))
 			if err != nil {
@@ -238,16 +251,36 @@ func createAboutPage(outFolder, templateFolder string) error {
 				return err
 			}
 
-			pluginsSection += "<li>" + pluginData["plugin_name"] + " v" + pluginData["plugin_version"] + " by " + pluginData["plugin_author"] + " - " + pluginData["plugin_description"] + "<br>" + pluginData["plugin_license"] + "<br>" + pluginData["plugin_link"] + "</li>"
+			pluginsSection.WriteString("<li>" + pluginData["plugin_name"] + " v" + pluginData["plugin_version"] + " by " + pluginData["plugin_author"] + " - " + pluginData["plugin_description"] + "<br>" + pluginData["plugin_license"] + "<br>" + pluginData["plugin_link"] + "</li>")
 		}
-		pluginsSection += "</ul>"
+		pluginsSection.WriteString("</ul>")
 	}
 
 	// log.Println("pluginSection: ", pluginsSection)
 
 	// log.Println("writeline: ", aboutFile, string(header)+siteExplainer+siteName+siteDesc+siteLink+siteLicense+authorExplainer+authorName+authorBio+authorLinks+pluginsSection+string(footer))
 	// combine the content and write to the about file
-	fmt.Fprintln(aboutFile, string(header)+siteExplainer+siteName+siteDesc+siteLink+siteLicense+authorExplainer+authorName+authorBio+authorLinks+pluginsSection+string(footer))
+	var (
+		output    strings.Builder
+		forOutput = []string{
+			string(header),
+			siteExplainer,
+			siteName,
+			siteDesc,
+			siteLink,
+			siteLicense,
+			authorExplainer,
+			authorName,
+			authorBio,
+			authorLinks,
+			pluginsSection.String(),
+			string(footer),
+		}
+	)
+	for _, v := range forOutput {
+		output.WriteString(v)
+	}
+	fmt.Fprintln(aboutFile, output.String())
 
 	aboutFile.Close()
 

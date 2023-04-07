@@ -48,13 +48,18 @@ func CreateXMLRSSFeed(inFolder, outFolder string) {
 		return fi.ModTime().After(fj.ModTime())
 	})
 
-	var rss RSSFeed
-	rss.XMLName.Space = "http://www.w3.org/2005/Atom"
-	rss.XMLName.Local = "feed"
-	rss.Version = "2.0"
-	rss.Channel.Title = "My Blog"
-	rss.Channel.Link = "https://mycoolblog.com"
-	rss.Channel.Description = "A blog about cool stuff"
+	rss := RSSFeed{
+		XMLName: xml.Name{
+			Space: "http://www.w3.org/2005/Atom",
+			Local: "feed",
+		},
+		Version: "2.0",
+		Channel: RSSChannel{
+			Title:       "My Blog",
+			Link:        "https://mycoolblog.com",
+			Description: "A blog about cool stuff",
+		},
+	}
 	// rss.Channel.AtomLink = AtomLink{Rel: "self", Href: "https://mycoolblog.com/feed.xml"}
 
 	for _, file := range files {

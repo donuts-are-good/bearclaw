@@ -212,10 +212,13 @@ func promptUser(message string) string {
 func validateConfig() bool {
 
 	// this could probably be better
-	if author_name == "" || author_bio == "" || len(author_links) == 0 || site_name == "" || site_description == "" || site_link == "" || site_license == "" {
-		return false
-	}
-	return true
+	return !(author_name == "" ||
+		author_bio == "" ||
+		len(author_links) == 0 ||
+		site_name == "" ||
+		site_description == "" ||
+		site_link == "" ||
+		site_license == "")
 }
 
 // validateConfigFile is essentially the same as validateConfig, but

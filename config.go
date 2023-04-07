@@ -136,8 +136,16 @@ func loadConfig() {
 		defer file.Close()
 
 		// write the config file
-		// TODO: simplify this
-		_, err = file.WriteString(fmt.Sprintf("author_name: %s\nauthor_bio: %s\nauthor_links %s\nsite_name: %s\nsite_description: %s\nsite_link %s\nsite_license: %s\n", author.Name, author.Bio, strings.Join(author.Links, ","), site.Name, site.Description, site.Link, site.License))
+		config := []string{
+			fmt.Sprintf("author_name: %s", author.Name),
+			fmt.Sprintf("author_bio: %s", author.Bio),
+			fmt.Sprintf("author_links: %s", author.Links),
+			fmt.Sprintf("site_name: %s", site.Name),
+			fmt.Sprintf("site_description: %s", site.Description),
+			fmt.Sprintf("site_link: %s", site.Link),
+			fmt.Sprintf("site_license: %s", site.License),
+		}
+		_, err = file.WriteString(strings.Join(config, "\n"))
 		if err != nil {
 			log.Fatalf("could not write to config file: %v", err)
 		}

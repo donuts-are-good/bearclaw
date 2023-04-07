@@ -161,8 +161,8 @@ func createPostList(inFolder, outFolder, templateFolder string) {
 
 func createAboutPage(outFolder, templateFolder string) error {
 
-	log.Println("outFolder: ", outFolder)
-	log.Println("templateFolder: ", templateFolder)
+	log.Println("Your output folder: \t", outFolder)
+	log.Println("Your templates folder: \t", templateFolder)
 
 	// create the about file
 	aboutFile, pluginErr := os.Create(outFolder + "/about.html")
@@ -185,7 +185,7 @@ func createAboutPage(outFolder, templateFolder string) error {
 	// the way this entire function is structured could be a lot better
 	// it's not that it's wrong, it's just messy and ugly
 	siteExplainer := "<b class=\"info\">about this site</b><br>"
-	log.Println("siteExplainer", siteExplainer)
+	// log.Println("siteExplainer", siteExplainer)
 
 	// content vars
 	siteName := "name:&ensp;" + site.Name + "<br>"
@@ -193,7 +193,7 @@ func createAboutPage(outFolder, templateFolder string) error {
 	siteLink := "url:&ensp;<a href='" + site.Link + "'>" + site.Link + "</a><br>"
 	siteLicense := "license:&ensp;" + site.License + "<br><br><br>"
 
-	log.Println("site info:", siteName, siteDesc, siteLink, siteLicense)
+	// log.Println("site info:", siteName, siteDesc, siteLink, siteLicense)
 
 	// author vars
 	authorExplainer := "<b class=\"info\">author information</b><br>"
@@ -205,7 +205,7 @@ func createAboutPage(outFolder, templateFolder string) error {
 	}
 	authorLinks += "<br><br>"
 
-	log.Println("authorInfo: ", authorExplainer, authorName, authorBio, authorLinks)
+	// log.Println("authorInfo: ", authorExplainer, authorName, authorBio, authorLinks)
 	// plugin vars
 
 	pluginsSection := " "
@@ -217,7 +217,12 @@ func createAboutPage(outFolder, templateFolder string) error {
 	}
 
 	if len(plugins) > 0 {
-		log.Println("plugins: ", len(plugins))
+
+		if len(plugins) == 1 {
+			log.Printf("Extensions:\t %d plugin loaded", len(plugins))
+		} else {
+			log.Printf("Extensions:\t %d plugins loaded", len(plugins))
+		}
 		pluginsSection = "<b>plugin credits</b>"
 		for _, plugin := range plugins {
 			file, err := os.Open(pluginsFolder + "/" + plugin.Name() + "/plugin.json")
@@ -238,7 +243,7 @@ func createAboutPage(outFolder, templateFolder string) error {
 		pluginsSection += "</ul>"
 	}
 
-	log.Println("pluginSection: ", pluginsSection)
+	// log.Println("pluginSection: ", pluginsSection)
 
 	// log.Println("writeline: ", aboutFile, string(header)+siteExplainer+siteName+siteDesc+siteLink+siteLicense+authorExplainer+authorName+authorBio+authorLinks+pluginsSection+string(footer))
 	// combine the content and write to the about file

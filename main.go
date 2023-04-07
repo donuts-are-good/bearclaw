@@ -38,7 +38,7 @@ func main() {
 // recreateHeaderFooterFiles recreates the header and footer files
 // if we're rebuilding the templates, we'll need these.
 func recreateHeaderFooterFiles(templatesFolder string) error {
-	headerFile, err := os.Create(templatesFolder + "/header.html")
+	headerFile, err := os.Create(filepath.Join(templatesFolder, "header.html"))
 	if err != nil {
 		return err
 	}
@@ -47,7 +47,7 @@ func recreateHeaderFooterFiles(templatesFolder string) error {
 	if err != nil {
 		return err
 	}
-	footerFile, err := os.Create(templatesFolder + "/footer.html")
+	footerFile, err := os.Create(filepath.Join(templatesFolder, "footer.html"))
 	if err != nil {
 		return err
 	}
@@ -112,8 +112,8 @@ func createPostList(inFolder, outFolder, templateFolder string) {
 
 	// sort them by mod time
 	sort.Slice(files, func(i, j int) bool {
-		fi, _ := os.Stat(inFolder + "/" + files[i].Name())
-		fj, _ := os.Stat(inFolder + "/" + files[j].Name())
+		fi, _ := os.Stat(filepath.Join(inFolder, files[i].Name()))
+		fj, _ := os.Stat(filepath.Join(inFolder, files[j].Name()))
 		return fi.ModTime().After(fj.ModTime())
 	})
 
@@ -146,14 +146,14 @@ func createPostList(inFolder, outFolder, templateFolder string) {
 	postList += "</ul>"
 
 	// create the posts file
-	htmlFile, _ := os.Create(outFolder + "/index.html")
+	htmlFile, _ := os.Create(filepath.Join(outFolder, "index.html"))
 
 	// don't forget to close it
 	defer htmlFile.Close()
 
 	// read the header/footer templates
-	header, _ := os.ReadFile(templateFolder + "/header.html")
-	footer, _ := os.ReadFile(templateFolder + "/footer.html")
+	header, _ := os.ReadFile(filepath.Join(templateFolder, "header.html"))
+	footer, _ := os.ReadFile(filepath.Join(templateFolder, "footer.html"))
 
 	// combine them
 	fmt.Fprintln(htmlFile, string(header)+postList+string(footer))
@@ -165,18 +165,18 @@ func createAboutPage(outFolder, templateFolder string) error {
 	log.Println("Your templates folder: \t", templateFolder)
 
 	// create the about file
-	aboutFile, pluginErr := os.Create(outFolder + "/about.html")
+	aboutFile, pluginErr := os.Create(filepath.Join(outFolder, "about.html"))
 	if pluginErr != nil {
 		log.Println("aboutFile: ", pluginErr)
 		return pluginErr
 	}
 
 	// read the header/footer templates
-	header, pluginErr := os.ReadFile(templateFolder + "/header.html")
+	header, pluginErr := os.ReadFile(filepath.Join(templateFolder, "header.html"))
 	if pluginErr != nil {
 		return pluginErr
 	}
-	footer, pluginErr := os.ReadFile(templateFolder + "/footer.html")
+	footer, pluginErr := os.ReadFile(filepath.Join(templateFolder, "footer.html"))
 	if pluginErr != nil {
 		return pluginErr
 	}
@@ -225,7 +225,7 @@ func createAboutPage(outFolder, templateFolder string) error {
 		}
 		pluginsSection = "<b>plugin credits</b>"
 		for _, plugin := range plugins {
-			file, err := os.Open(pluginsFolder + "/" + plugin.Name() + "/plugin.json")
+			file, err := os.Open(filepath.Join(pluginsFolder, plugin.Name(), "plugin.json"))
 			if err != nil {
 				log.Println("plugin error: ", err)
 				return err

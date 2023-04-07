@@ -7,7 +7,6 @@ import (
 	"io"
 	"log"
 	"os"
-	"path"
 	"path/filepath"
 	"runtime"
 	"sync"
@@ -46,12 +45,12 @@ func markdownToHTML(inFolder, outFolder, templateFolder string) {
 }
 
 func fileProcessor(input <-chan string, inFolder, outFolder, templateFolder string) {
-	header, err := os.ReadFile(path.Join(templateFolder, "header.html"))
+	header, err := os.ReadFile(filepath.Join(templateFolder, "header.html"))
 	if err != nil {
 		fmt.Printf("%s: couldn't read 'header.html': %v\n", ansi.Bold(ansi.Red("ERROR")), err)
 		return
 	}
-	footer, err := os.ReadFile(path.Join(templateFolder, "footer.html"))
+	footer, err := os.ReadFile(filepath.Join(templateFolder, "footer.html"))
 	if err != nil {
 		fmt.Printf("%s: couldn't read 'footer.html': %v\n", ansi.Bold(ansi.Red("ERROR")), err)
 		return
@@ -65,14 +64,14 @@ func fileProcessor(input <-chan string, inFolder, outFolder, templateFolder stri
 		result.Reset()
 
 		// open the selected markdown file
-		markdownFile, err := os.Open(path.Join(inFolder, infile))
+		markdownFile, err := os.Open(filepath.Join(inFolder, infile))
 		if err != nil {
 			fmt.Printf("%s: couldn't read '%s': %v\n", ansi.Bold(ansi.Red("ERROR")), infile, err)
 			continue
 		}
 
 		// create the html file
-		htmlFile, err := os.Create(path.Join(outFolder, infile+".html"))
+		htmlFile, err := os.Create(filepath.Join(outFolder, infile+".html"))
 		if err != nil {
 			fmt.Printf("%s: couldn't create '%s': %v\n", ansi.Bold(ansi.Red("ERROR")), infile+".html", err)
 			markdownFile.Close()

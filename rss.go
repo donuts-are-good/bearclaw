@@ -43,8 +43,8 @@ func CreateXMLRSSFeed(inFolder, outFolder string) {
 	// most recently modified file comes first
 	sort.Slice(files, func(i, j int) bool {
 		// get info for each file in the list
-		fi, _ := os.Stat(inFolder + "/" + files[i].Name())
-		fj, _ := os.Stat(inFolder + "/" + files[j].Name())
+		fi, _ := os.Stat(filepath.Join(inFolder, files[i].Name()))
+		fj, _ := os.Stat(filepath.Join(inFolder, files[j].Name()))
 		return fi.ModTime().After(fj.ModTime())
 	})
 
@@ -64,13 +64,13 @@ func CreateXMLRSSFeed(inFolder, outFolder string) {
 
 	for _, file := range files {
 		if filepath.Ext(file.Name()) == ".md" {
-			fileInfo, err := os.Stat(inFolder + "/" + file.Name())
+			fileInfo, err := os.Stat(filepath.Join(inFolder, file.Name()))
 			if err != nil {
 				continue
 			}
 			modTime := fileInfo.ModTime().Format(time.RFC1123)
 			title := strings.TrimSuffix(file.Name(), filepath.Ext(file.Name()))
-			markdownFile, err := os.Open(inFolder + "/" + file.Name())
+			markdownFile, err := os.Open(filepath.Join(inFolder, file.Name()))
 			if err != nil {
 				continue
 			}
@@ -94,7 +94,7 @@ func CreateXMLRSSFeed(inFolder, outFolder string) {
 		}
 	}
 	// create the rss file
-	rssFile, _ := os.Create(outFolder + "/feed.xml")
+	rssFile, _ := os.Create(filepath.Join(outFolder, "feed.xml"))
 
 	// don't forget to close it
 	defer rssFile.Close()

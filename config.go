@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"path"
+	"path/filepath"
 	"strings"
 )
 
@@ -29,11 +29,11 @@ type Site struct {
 
 // paths
 var (
-	inFolder       = path.Join(".", "markdown")  // your markdown articles go in here
-	outFolder      = path.Join(".", "output")    // your rendered html will end up here
-	templateFolder = path.Join(".", "templates") // your header and footer go here
-	pluginsFolder  = path.Join(".", "plugins")   // your plugins go here
-	isWatching     = false                       // whether we are watching any folders at launch
+	inFolder       = filepath.Join(".", "markdown")  // your markdown articles go in here
+	outFolder      = filepath.Join(".", "output")    // your rendered html will end up here
+	templateFolder = filepath.Join(".", "templates") // your header and footer go here
+	pluginsFolder  = filepath.Join(".", "plugins")   // your plugins go here
+	isWatching     = false                           // whether we are watching any folders at launch
 )
 
 // config

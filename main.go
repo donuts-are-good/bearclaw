@@ -131,7 +131,7 @@ func createPostList(inFolder, outFolder, templateFolder string) {
 			title := strings.TrimSuffix(file.Name(), filepath.Ext(file.Name()))
 
 			// put it on the list with the html
-			toWrite := []string{
+			toWrite := [...]string{
 				"<li><a href='",
 				url.PathEscape(file.Name()),
 				".html'>",
@@ -166,7 +166,7 @@ func createPostList(inFolder, outFolder, templateFolder string) {
 	// combine them
 	var (
 		output    strings.Builder
-		forOutput = []string{
+		forOutput = [...]string{
 			string(header),
 			postList.String(),
 			string(footer),
@@ -259,7 +259,7 @@ func createAboutPage(outFolder, templateFolder string) error {
 				return err
 			}
 
-			toWrite := []string{
+			toWrite := [...]string{
 				"<li>",
 				pluginData["plugin_name"],
 				" v", pluginData["plugin_version"],
@@ -282,7 +282,7 @@ func createAboutPage(outFolder, templateFolder string) error {
 	// combine the content and write to the about file
 	var (
 		output    strings.Builder
-		forOutput = []string{
+		forOutput = [...]string{
 			string(header),
 			siteExplainer,
 			siteName,

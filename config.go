@@ -54,7 +54,7 @@ var (
 	site = Site{
 		Name:        "bearclaw blog",
 		Description: "a blog about a tiny static site generator in Go!",
-		Link:        "https://" + "bearclaw.blog",
+		Link:        "https://bearclaw.blog",
 		License:     "MIT License",
 	}
 )
@@ -89,11 +89,7 @@ func loadConfig() {
 		default_author_links_string := strings.Join(default_author_links, ", ")
 		author_links_string := promptUser("Author links", default_author_links_string)
 
-		// if author_links_string == default_author_links_string {
-		// 	author.Links = default_author_links
-		// } else {
 		author.Links = strings.Split(author_links_string, ",")
-		// }
 
 		// prompt for site name
 		site.Name = promptUser("Site name", "bearclaw blog")

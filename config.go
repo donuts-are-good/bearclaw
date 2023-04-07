@@ -54,9 +54,8 @@ var (
 	site = Site{
 		Name:        "bearclaw blog",
 		Description: "a blog about a tiny static site generator in Go!",
-		// TODO: simplify this
-		Link:    "https://" + "bearclaw.blog",
-		License: "MIT License",
+		Link:        "https://" + "bearclaw.blog",
+		License:     "MIT License",
 	}
 )
 
@@ -77,51 +76,36 @@ func loadConfig() {
 		fmt.Println("No config file found, please enter the following information:")
 
 		// prompt for username
-		author.Name = promptUser("Author name (default: @donuts-are-good): ")
-		if author.Name == "" {
-			author.Name = "@donuts-are-good"
-		}
+		author.Name = promptUser("Author name", "@donuts-are-good")
 
 		// prompt for author
-		author.Bio = promptUser("Author bio (default: bearclaw author): ")
-		if author.Bio == "" {
-			author.Bio = "bearclaw author"
-		}
+		author.Bio = promptUser("Author bio", "bearclaw author")
 
 		// prompt for author links
-		author_links_string := promptUser("Author links (default: https://github.com/donuts-are-good/, https://github.com/donuts-are-good/bearclaw): ")
-		if author_links_string == "" {
-			author.Links = []string{
-				"https://github.com/donuts-are-good/",
-				"https://github.com/donuts-are-good/bearclaw",
-			}
-		} else {
-			author.Links = strings.Split(author_links_string, ",")
+		default_author_links := []string{
+			"https://github.com/donuts-are-good/",
+			"https://github.com/donuts-are-good/bearclaw",
 		}
+		default_author_links_string := strings.Join(default_author_links, ", ")
+		author_links_string := promptUser("Author links", default_author_links_string)
+
+		// if author_links_string == default_author_links_string {
+		// 	author.Links = default_author_links
+		// } else {
+		author.Links = strings.Split(author_links_string, ",")
+		// }
 
 		// prompt for site name
-		site.Name = promptUser("Site name (default: bearclaw blog): ")
-		if site.Name == "" {
-			site.Name = "bearclaw blog"
-		}
+		site.Name = promptUser("Site name", "bearclaw blog")
 
 		// prompt for site description
-		site.Description = promptUser("Site description (default: a blog about a tiny static site generator in Go!): ")
-		if site.Description == "" {
-			site.Description = "a blog about a tiny static site generator in Go!"
-		}
+		site.Description = promptUser("Site description", "a blog about a tiny static site generator in Go!")
 
 		// prompt for site link
-		site.Link = promptUser("Site link (default: https://bearclaw.blog): ")
-		if site.Link == "" {
-			site.Link = "https://" + "bearclaw.blog"
-		}
+		site.Link = promptUser("Site link", "https://bearclaw.blog")
 
 		// prompt for site license
-		site.License = promptUser("Site license (default: MIT License): ")
-		if site.License == "" {
-			site.License = "MIT License"
-		}
+		site.License = promptUser("Site license", "MIT License")
 
 		// we're missing some config values here, but this is mainly
 		// to test whether this way of doing it works.
@@ -206,7 +190,8 @@ func loadConfig() {
 }
 
 // promptUser will say a thing and prompt the user for a config value
-func promptUser(message string) string {
+// returns def if no value was provided
+func promptUser(message, def string) (output string) {
 
 	/*
 
@@ -221,14 +206,20 @@ func promptUser(message string) string {
 	*/
 
 	// so we talk to the customer
-	fmt.Print(message)
+	fmt.Printf("%s (default: %s): ", message, def)
 
 	// then we give it to the engineer
 	input := bufio.NewScanner(os.Stdin)
 	input.Scan()
 
 	// what the hell is wrong with me
-	return input.Text()
+
+	output = input.Text()
+	if output == "" {
+		output = def
+	}
+
+	return output
 }
 
 // validateConfig checks to see if any values have been

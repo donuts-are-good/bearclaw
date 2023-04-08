@@ -267,7 +267,7 @@ func createAboutPage(outFolder, templateFolder string) error {
 				" - ", pluginData["plugin_description"],
 				"<br>", pluginData["plugin_license"], "<br>",
 				pluginData["plugin_link"],
-				"</li",
+				"</li>",
 			}
 			for _, v := range toWrite {
 				pluginsSection.WriteString(v)

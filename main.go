@@ -17,6 +17,11 @@ import (
 // init runs before main()
 func init() {
 
+	// check if os.Getwd failed
+	if wdErr != nil {
+		log.Fatalf("could not get working directory: %v", wdErr)
+	}
+
 	// scan for or make a config file
 	loadConfig()
 

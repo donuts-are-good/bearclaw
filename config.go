@@ -29,11 +29,13 @@ type Site struct {
 
 // paths
 var (
-	inFolder       = filepath.Join(".", "markdown")  // your markdown articles go in here
-	outFolder      = filepath.Join(".", "output")    // your rendered html will end up here
-	templateFolder = filepath.Join(".", "templates") // your header and footer go here
-	pluginsFolder  = filepath.Join(".", "plugins")   // your plugins go here
-	isWatching     = false                           // whether we are watching any folders at launch
+	// we are checking if it errored in init()
+	wd, wdErr      = os.Getwd()                     // working directory
+	inFolder       = filepath.Join(wd, "markdown")  // your markdown articles go in here
+	outFolder      = filepath.Join(wd, "output")    // your rendered html will end up here
+	templateFolder = filepath.Join(wd, "templates") // your header and footer go here
+	pluginsFolder  = filepath.Join(wd, "plugins")   // your plugins go here
+	isWatching     = false                          // whether we are watching any folders at launch
 )
 
 // config

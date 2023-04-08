@@ -331,9 +331,13 @@ func checkFlags() {
 	// 'watched' directory, fsnotify will trigger a rebuild each time a build
 	// deposits files into the watched directory.
 	// this should prevent that.
-	if inFolder == outFolder || inFolder == templateFolder || inFolder == pluginsFolder || outFolder == templateFolder || outFolder == pluginsFolder || templateFolder == pluginsFolder {
-		message := "Error: The input, output, templates, and plugins folders must be different directories"
-		log.Fatalf(message)
+	folders := []string{inFolder, outFolder, templateFolder, pluginsFolder}
+	for indexFirst, first := range folders {
+		for indexSecond, second := range folders {
+			if indexFirst != indexSecond && first == second {
+				log.Fatalln("Error: The input, output, templates, and plugins folders must be different directories")
+			}
+		}
 	}
 
 	if isWatching {

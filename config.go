@@ -75,30 +75,27 @@ func loadConfig() {
 		// if it doesn't exist, let's build it
 		fmt.Println("No config file found, please enter the following information:")
 
-		// copy site and author to use their fields as default values
-		// this might be pointless; if that's the case, feel free to remove it
-		default_author, default_site := author, site
 		// prompt for username
-		author.Name = promptUser("Author name", default_author.Name)
+		author.Name = promptUser("Author name", author.Name)
 
 		// prompt for author
-		author.Bio = promptUser("Author bio", default_author.Bio)
+		author.Bio = promptUser("Author bio", author.Bio)
 
 		// prompt for author links
-		author_links_string := promptUser("Author links", strings.Join(default_author.Links, ","))
+		author_links_string := promptUser("Author links", strings.Join(author.Links, ","))
 		author.Links = strings.Split(author_links_string, ",")
 
 		// prompt for site name
-		site.Name = promptUser("Site name", default_site.Name)
+		site.Name = promptUser("Site name", site.Name)
 
 		// prompt for site description
-		site.Description = promptUser("Site description", default_site.Description)
+		site.Description = promptUser("Site description", site.Description)
 
 		// prompt for site link
-		site.Link = promptUser("Site link", default_site.Link)
+		site.Link = promptUser("Site link", site.Link)
 
 		// prompt for site license
-		site.License = promptUser("Site license", default_site.License)
+		site.License = promptUser("Site license", site.License)
 
 		// we're missing some config values here, but this is mainly
 		// to test whether this way of doing it works.

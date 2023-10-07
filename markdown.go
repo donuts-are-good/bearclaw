@@ -15,7 +15,7 @@ import (
 	"mpldr.codes/ansi"
 )
 
-// markdownToHTML converts markdown documents to HTML
+// markdowntohtml converts markdown documents to html
 func markdownToHTML(inFolder, outFolder, templateFolder string) {
 	files, err := os.ReadDir(inFolder)
 	if err != nil {
@@ -35,6 +35,7 @@ func markdownToHTML(inFolder, outFolder, templateFolder string) {
 	}
 
 	for _, file := range files {
+
 		// only markdown files
 		if filepath.Ext(file.Name()) == ".md" {
 			input <- file.Name()
@@ -96,9 +97,8 @@ func fileProcessor(input <-chan string, inFolder, outFolder, templateFolder stri
 		result.Write(bytes.TrimSpace(html))
 		result.Write(footer)
 
-		// pass the assembled html into ScanForPluginCalls
-		// var resultCopy []byte
-
+		// pass the assembled html into scanforplugincalls
+		// var resultcopy []byte
 		resultCopy := make([]byte, result.Len())
 		copy(resultCopy, result.Bytes())
 		htmlAfterPlugins, err := ScanForPluginCalls(result.Bytes())

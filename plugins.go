@@ -18,6 +18,7 @@ func FindZips(folderPath string) error {
 
 	// loop through the files in the plugins dir
 	for _, file := range files {
+
 		// just look at the zips
 		if filepath.Ext(file.Name()) == ".zip" {
 
@@ -80,10 +81,12 @@ func FindZips(folderPath string) error {
 }
 
 func ScanForPluginCalls(html []byte) ([]byte, error) {
+
 	// regexp to find the plugin call
 	re := regexp.MustCompile(`<!-- plugin "(.+)" -->`)
 	matches := re.FindAllSubmatch(html, -1)
 	if len(matches) == 0 {
+
 		// we probably messed up the plugins call, or it didn't match anything.
 		return html, nil
 	}

@@ -37,11 +37,13 @@ type RSSFeed struct {
 }
 
 func CreateXMLRSSFeed(inFolder, outFolder string) {
+
 	// get the posts we have
 	files, _ := os.ReadDir(inFolder)
 
 	// most recently modified file comes first
 	sort.Slice(files, func(i, j int) bool {
+
 		// get info for each file in the list
 		fi, _ := os.Stat(filepath.Join(inFolder, files[i].Name()))
 		fj, _ := os.Stat(filepath.Join(inFolder, files[j].Name()))
@@ -60,8 +62,8 @@ func CreateXMLRSSFeed(inFolder, outFolder string) {
 			Description: "A blog about cool stuff",
 		},
 	}
-	// rss.Channel.AtomLink = AtomLink{Rel: "self", Href: "https://mycoolblog.com/feed.xml"}
 
+	// rss.channel.atomlink = atomlink{rel: "self", href: "https://mycoolblog.com/feed.xml"}
 	for _, file := range files {
 		if filepath.Ext(file.Name()) == ".md" {
 			fileInfo, err := os.Stat(filepath.Join(inFolder, file.Name()))
@@ -93,13 +95,14 @@ func CreateXMLRSSFeed(inFolder, outFolder string) {
 			rss.Channel.Item = append(rss.Channel.Item, item)
 		}
 	}
+
 	// create the rss file
 	rssFile, _ := os.Create(filepath.Join(outFolder, "feed.xml"))
 
 	// don't forget to close it
 	defer rssFile.Close()
 
-	// write the RSS feed to file
+	// write the rss feed to file
 	enc := xml.NewEncoder(rssFile)
 	enc.Indent("", "  ")
 	if err := enc.Encode(rss); err != nil {

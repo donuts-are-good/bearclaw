@@ -17,7 +17,7 @@ import (
 // init runs before main()
 func init() {
 
-	// check if os.Getwd failed
+	// check if os.getwd failed
 	if wdErr != nil {
 		log.Fatalf("could not get working directory: %v", wdErr)
 	}
@@ -40,7 +40,7 @@ func main() {
 
 }
 
-// recreateHeaderFooterFiles recreates the header and footer files
+// recreateheaderfooterfiles recreates the header and footer files
 // if we're rebuilding the templates, we'll need these.
 func recreateHeaderFooterFiles(templatesFolder string) error {
 	headerFile, err := os.Create(filepath.Join(templatesFolder, "header.html"))
@@ -65,7 +65,7 @@ func recreateHeaderFooterFiles(templatesFolder string) error {
 	return nil
 }
 
-// watchFolderForChange will watch an individual folder for
+// watchfolderforchange will watch an individual folder for
 // any type of change, then trigger a rebuild
 func watchFolderForChange(folder string) {
 
@@ -93,8 +93,8 @@ func watchFolderForChange(folder string) {
 	}
 }
 
-// watchFoldersForChanges loops through a list of folders and
-// passes them to watchFolderForChange
+// watchfoldersforchanges loops through a list of folders and
+// passes them to watchfolderforchange
 func watchFoldersForChanges(folders []string) {
 
 	// range through the watched files
@@ -106,7 +106,7 @@ func watchFoldersForChanges(folders []string) {
 
 }
 
-// createPostList creates the page that has a list of all of your posts
+// createpostlist creates the page that has a list of all of your posts
 func createPostList(inFolder, outFolder, templateFolder string) {
 
 	// read the files in the directory
@@ -129,6 +129,7 @@ func createPostList(inFolder, outFolder, templateFolder string) {
 
 	// for all files...
 	for _, file := range files {
+
 		// if it is a markdown file...
 		if filepath.Ext(file.Name()) == ".md" {
 
@@ -149,8 +150,9 @@ func createPostList(inFolder, outFolder, templateFolder string) {
 		}
 	}
 
-	// if there are more than 0 posts make an RSS feed
+	// if there are more than 0 posts make an rss feed
 	if len(files) > 0 {
+
 		// generate the rss feed
 		CreateXMLRSSFeed(inFolder, outFolder)
 	}
@@ -209,16 +211,15 @@ func createAboutPage(outFolder, templateFolder string) error {
 	// the way this entire function is structured could be a lot better
 	// it's not that it's wrong, it's just messy and ugly
 	siteExplainer := "<b class=\"info\">about this site</b><br>"
-	// log.Println("siteExplainer", siteExplainer)
 
+	// log.println("siteexplainer", siteexplainer)
 	// content vars
 	siteName := "name:&ensp;" + site.Name + "<br>"
 	siteDesc := "bio:&ensp;" + site.Description + "<br>"
 	siteLink := "url:&ensp;<a href='" + site.Link + "'>" + site.Link + "</a><br>"
 	siteLicense := "license:&ensp;" + site.License + "<br><br><br>"
 
-	// log.Println("site info:", siteName, siteDesc, siteLink, siteLicense)
-
+	// log.println("site info:", sitename, sitedesc, sitelink, sitelicense)
 	// author vars
 	authorExplainer := "<b class=\"info\">author information</b><br>"
 	authorName := "name:&ensp;" + author.Name + "<br>"
@@ -229,9 +230,8 @@ func createAboutPage(outFolder, templateFolder string) error {
 	}
 	authorLinks += "<br><br>"
 
-	// log.Println("authorInfo: ", authorExplainer, authorName, authorBio, authorLinks)
+	// log.println("authorinfo: ", authorexplainer, authorname, authorbio, authorlinks)
 	// plugin vars
-
 	var pluginsSection strings.Builder
 	pluginsSection.WriteRune(' ')
 
@@ -281,9 +281,8 @@ func createAboutPage(outFolder, templateFolder string) error {
 		pluginsSection.WriteString("</ul>")
 	}
 
-	// log.Println("pluginSection: ", pluginsSection)
-
-	// log.Println("writeline: ", aboutFile, string(header)+siteExplainer+siteName+siteDesc+siteLink+siteLicense+authorExplainer+authorName+authorBio+authorLinks+pluginsSection+string(footer))
+	// log.println("pluginsection: ", pluginssection)
+	// log.println("writeline: ", aboutfile, string(header)+siteexplainer+sitename+sitedesc+sitelink+sitelicense+authorexplainer+authorname+authorbio+authorlinks+pluginssection+string(footer))
 	// combine the content and write to the about file
 	var (
 		output    strings.Builder
@@ -312,7 +311,7 @@ func createAboutPage(outFolder, templateFolder string) error {
 	return nil
 }
 
-// checkFlags looks at the run flags like --output when we start up
+// checkflags looks at the run flags like --output when we start up
 func checkFlags() {
 
 	flag.StringVar(&inFolder, "input", inFolder, "the input folder for markdown files")
@@ -341,6 +340,7 @@ func checkFlags() {
 	}
 
 	if isWatching {
+
 		// make a list of folders to keep an eye on
 		foldersToWatch := []string{templateFolder, inFolder}
 

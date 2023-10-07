@@ -11,8 +11,6 @@ import (
 	"sort"
 	"strings"
 	"time"
-
-	"github.com/russross/blackfriday"
 )
 
 type RSSItem struct {
@@ -82,7 +80,7 @@ func CreateXMLRSSFeed(inFolder, outFolder string) {
 				continue
 			}
 
-			html := blackfriday.MarkdownCommon(markdown)
+			html := MarkdownCommon(markdown)
 
 			var item RSSItem
 			item.Title = title

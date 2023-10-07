@@ -11,7 +11,6 @@ import (
 	"runtime"
 	"sync"
 
-	"github.com/russross/blackfriday"
 	"mpldr.codes/ansi"
 )
 
@@ -89,7 +88,7 @@ func fileProcessor(input <-chan string, inFolder, outFolder, templateFolder stri
 		}
 
 		// send the md to blackfriday
-		html := blackfriday.MarkdownCommon(markdown)
+		html := MarkdownCommon(markdown)
 
 		// assemble in order
 		result.Write(header)

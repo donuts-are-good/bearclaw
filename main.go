@@ -10,8 +10,7 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
-
-	"github.com/fsnotify/fsnotify"
+	"time"
 )
 
 // init runs before main()
@@ -65,33 +64,74 @@ func recreateHeaderFooterFiles(templatesFolder string) error {
 	return nil
 }
 
-// watchfolderforchange will watch an individual folder for
+// watchFolderForChange will watch an individual folder for
 // any type of change, then trigger a rebuild
 func watchFolderForChange(folder string) {
-
-	// make a watcher with fsnotify
-	watcher, err := fsnotify.NewWatcher()
-	if err != nil {
-		log.Fatalf("unable to watch %s : %v", folder, err)
-	}
-	defer watcher.Close()
-
-	err = watcher.Add(folder)
-	if err != nil {
-		log.Fatalf("couldn't add a watcher: %v", err)
-	}
+	// Get the initial modification time of the folder
+	initialModTime := getFolderModTime(folder)
 
 	for {
-		select {
-		case event := <-watcher.Events:
-			log.Println("modified:", event.Name, " - rebuilding files..")
+		// Sleep for a certain duration before checking for changes
+		time.Sleep(1 * time.Second)
+
+		// Get the current modification time of the folder
+		currentModTime := getFolderModTime(folder)
+
+		// Compare the current modification time with the initial one
+		if currentModTime.After(initialModTime) {
+			log.Println("Folder modified - rebuilding files..")
 			markdownToHTML(inFolder, outFolder, templateFolder)
 			createPostList(inFolder, outFolder, templateFolder)
-		case err := <-watcher.Errors:
-			log.Println("error:", err)
+
+			// Update the initial modification time
+			initialModTime = currentModTime
 		}
 	}
 }
+
+// getFolderModTime returns the modification time of a folder
+func getFolderModTime(folder string) time.Time {
+	info, err := os.Stat(folder)
+	if err != nil {
+		log.Fatalf("unable to get folder info: %v", err)
+	}
+	return info.ModTime()
+}
+
+// sometimes even though it worked well, i regretted adding fsnotify.
+// during the period I was writing bearclaw I was using as much stdlib
+// as possible before reaching out to third party solutions.
+// Not thinking this one through, or not being simple enough resulted
+// in me choosing fsnotify and i always regretted it. not because its
+// bad, but because i didnt try harder. we'll see if this new way works.
+
+// // watchfolderforchange will watch an individual folder for
+// // any type of change, then trigger a rebuild
+// func watchFolderForChange(folder string) {
+
+// 	// make a watcher with fsnotify
+// 	watcher, err := fsnotify.NewWatcher()
+// 	if err != nil {
+// 		log.Fatalf("unable to watch %s : %v", folder, err)
+// 	}
+// 	defer watcher.Close()
+
+// 	err = watcher.Add(folder)
+// 	if err != nil {
+// 		log.Fatalf("couldn't add a watcher: %v", err)
+// 	}
+
+// 	for {
+// 		select {
+// 		case event := <-watcher.Events:
+// 			log.Println("modified:", event.Name, " - rebuilding files..")
+// 			markdownToHTML(inFolder, outFolder, templateFolder)
+// 			createPostList(inFolder, outFolder, templateFolder)
+// 		case err := <-watcher.Errors:
+// 			log.Println("error:", err)
+// 		}
+// 	}
+// }
 
 // watchfoldersforchanges loops through a list of folders and
 // passes them to watchfolderforchange

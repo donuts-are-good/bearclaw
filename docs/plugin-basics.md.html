@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>bearclaw</title>
+    <link rel="icon" type="image/x-icon" href="https://user-images.githubusercontent.com/96031819/218300046-eb4cd215-b8ef-44bb-992b-3ce640be7623.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .banner {
+            padding-top: 2em;
+            padding-bottom: 1.2em;
+            font-size: 4em;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .info {
+            font-family: monospace;
+            font-size: 1.2em;
+        }
+
+        a {
+            color: deepskyblue;
+            text-decoration: underline;
+            text-decoration-style: solid;
+            text-decoration-thickness: 4px;
+            text-decoration-color: #ffeeee;
+            text-decoration-skip-ink: none;
+        }
+
+        .footer {
+            padding-top: 8em;
+            font-family: monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="banner">
+            <img src="https://user-images.githubusercontent.com/96031819/218300046-eb4cd215-b8ef-44bb-992b-3ce640be7623.png" alt="site logo" class="img-fluid">
+            bearclaw blog
+        </div>
+
+        <div class="row">
+            <div class="col-3 info">
+                <p>👋 Welcome :)<br>
+                    <small>I made this blog with a cool static site generator called <a href="https://github.com/donuts-are-good/bearclaw">bearclaw</a>, try it out!</small>
+                </p>
+                <b>links</b>
+                <br><small><a href="./index.html">🏠 home</a></small>
+                <br><small><a href="./about.html">🙋 about</a></small>
+                <br><small><a href="./feed.xml">📡 rss</a></small>
+            </div>
+            <div class="col"><h1>plugin basics</h1>
+
+<p>bearclaw supports plugins. plugins are html documents that may or may not contain their own CSS or JS.</p>
+
+<h2>yeah but what is it</h2>
+
+<p>think of it like a &ldquo;template&rdquo; you can stick anywhere.</p>
+
+<h2>how to use it</h2>
+
+<p>plugins should be added to the <code>plugins</code> folder as a <code>.zip</code>. bearclaw will automatically extract the zip and put it where it needs to go.</p>
+
+<p>plugins normally contain html files, so let&rsquo;s say you have a page-hit counter that goes up every time a new person shows up. let&rsquo;s call it &ldquo;pagehits&rdquo;. your plugin would arrive as <code>pagehits.zip</code> which you&rsquo;d drop in to the <code>bearclaw/plugins</code> folder.</p>
+
+<p>run bearclaw, and that zip file will turn itself into a folder with some html files inside, in this example lets say it is <code>today.html</code> and <code>total.html</code>. today.html shows you how many hits your page had today, and total.html has how many hits your page has in total.</p>
+
+<p>To call a plugin in your markdown pages, use a plugin comment like this:</p>
+
+<p><code>&lt;!-- plugin &quot;./plugins/pagehits/total.html&quot; --&gt;</code></p>
+
+<p>in our pagehits example, this should auto-insert our total page hits plugin every time we run <code>bearclaw</code>. bearclaw will try and rebuild everything in <code>markdown</code> folder every time it is run.</p>
+
+<h1><a href="https://github.com/donuts-are-good/bearclaw/blob/master/markdown/README.md">&lt;&lt; Go back</a></h1></div>
+</div>
+
+<footer class="footer">
+    <div class="row">
+        <div class="col">
+            <img height="60" width="120" src="https://user-images.githubusercontent.com/96031819/218300324-0eba5571-82f9-4a24-af2a-48c8fa935780.svg" alt="bearclaw svg logo" class="img-fluid">
+        </div>
+        <div class="col">
+            <b>bearclaw</b> is a tiny static site generator <br>
+            <small class="text-muted">write your content in markdown and bearclaw converts it to html</small>
+        </div>
+        <div class="col">
+            <a href="https://github.com/donuts-are-good/bearclaw">source code</a>, <a href="https://github.com/donuts-are-good/bearclaw/blob/master/license">license</a> <br>
+            <a href="https://github.com/donuts-are-good/bearclaw/blob/master/README.md">readme</a>, <a href="https://github.com/donuts-are-good/bearclaw/issues/new">bugs</a> <br>
+        </div>
+        <div class="col text-muted"><span style="color:deeppink">&hearts;</span> <b><a style="text-decoration:none;color:black" href="https://github.com/donuts-are-good/bearclaw/" target="_blank">@donuts-are-good</a></b><br><a href="https://github.com/donuts-are-good/bearclaw/blob/master/license" target="_blank" style="text-decoration:none;color:black">MIT License</a><br>2023</div>
+    </div>
+</footer>
+</div>
+</body>
+
+</html>

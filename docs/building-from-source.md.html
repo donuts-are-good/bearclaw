@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>bearclaw</title>
+    <link rel="icon" type="image/x-icon" href="https://user-images.githubusercontent.com/96031819/218300046-eb4cd215-b8ef-44bb-992b-3ce640be7623.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .banner {
+            padding-top: 2em;
+            padding-bottom: 1.2em;
+            font-size: 4em;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .info {
+            font-family: monospace;
+            font-size: 1.2em;
+        }
+
+        a {
+            color: deepskyblue;
+            text-decoration: underline;
+            text-decoration-style: solid;
+            text-decoration-thickness: 4px;
+            text-decoration-color: #ffeeee;
+            text-decoration-skip-ink: none;
+        }
+
+        .footer {
+            padding-top: 8em;
+            font-family: monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="banner">
+            <img src="https://user-images.githubusercontent.com/96031819/218300046-eb4cd215-b8ef-44bb-992b-3ce640be7623.png" alt="site logo" class="img-fluid">
+            bearclaw blog
+        </div>
+
+        <div class="row">
+            <div class="col-3 info">
+                <p>👋 Welcome :)<br>
+                    <small>I made this blog with a cool static site generator called <a href="https://github.com/donuts-are-good/bearclaw">bearclaw</a>, try it out!</small>
+                </p>
+                <b>links</b>
+                <br><small><a href="./index.html">🏠 home</a></small>
+                <br><small><a href="./about.html">🙋 about</a></small>
+                <br><small><a href="./feed.xml">📡 rss</a></small>
+            </div>
+            <div class="col"><h1>building from source</h1>
+
+<p>if you want to make changes to bearclaw or rename it and make it your own thing, that&rsquo;s totally fine, and encouraged. here&rsquo;s how you can build the <code>bearclaw</code> program from its source code.</p>
+
+<p><strong>what does this mean?</strong></p>
+
+<p>in very simple terms: when people say <em>&lsquo;source code&rsquo;</em> we just mean a document with human words that tell the computer how to do something. when you &lsquo;compile&rsquo; the source code, it means we use a helper program that can take those human words and translate it into machine language.</p>
+
+<p><strong>but, why recompile?</strong></p>
+
+<p>here&rsquo;s a brief list of reasons you&rsquo;d recompile:</p>
+
+<ul>
+<li>as a subtle flex to people looking over your shoulder</li>
+<li>just because you&rsquo;re curious</li>
+<li>there&rsquo;s a typo in <code>bearclaw</code> that is driving you crazy</li>
+<li>you&rsquo;ve decided you want to adapt bearclaw, and name it <code>chocolate-glazed-kruller</code> and tell your friends you 100% wrote it yourself ;)</li>
+</ul>
+
+<p>if you don&rsquo;t know what these words mean, don&rsquo;t worry about it. in normal operation, or even when things go wrong, recompiling will never be something you&rsquo;re told to do unless you really just want to. if this intimiates you, that&rsquo;s totally fine, you don&rsquo;t have to know this.</p>
+
+<h2>things you need:</h2>
+
+<h3>Go programming language</h3>
+
+<p>download: <a href="https://go.dev/">https://go.dev/</a></p>
+
+<p>install Go and that&rsquo;s about it</p>
+
+<h3>time</h3>
+
+<p>it takes about 5 seconds to re-compile</p>
+
+<p>right now it is about 10-20 seconds on my laptop using low-power battery mode to compile a fresh copy the first time, and about 2-5 seconds each time after. on an ancient computer, without SSD, maybe 30 seconds.</p>
+
+<h2>build instructions</h2>
+
+<ol>
+<li><p>get a copy of bearclaw sourcecode (.zip file or tar.gz) from the github releases page:
+<a href="https://github.com/donuts-are-good/bearclaw/releases">https://github.com/donuts-are-good/bearclaw/releases</a></p></li>
+
+<li><p>extract bearclaw source code to a folder anywhere.
+the build process only creates a single file called <code>bearclaw</code> in the same folder as your source code and won&rsquo;t touch anything outside of the folder.</p></li>
+
+<li><p>in the files you just extracted, you&rsquo;ll see a bunch of <code>.go</code> files and some folders. disregard all of that and just type <code>go build</code> as a command in that folder using your terminal.</p></li>
+</ol>
+
+<p>*<strong>note</strong>: the terminal is the black box with white text thing. you need to be in the folder with the <code>.go</code> files before this will work.*</p>
+
+<ol>
+<li>that&rsquo;s it.
+the Go compiler doesn&rsquo;t really output anything, you just run it, and if it doesn&rsquo;t say anything, that means success. if everything went well, you&rsquo;ll see a program in the folder called <code>bearclaw</code> or on windows, <code>bearclaw.exe</code></li>
+</ol>
+
+<h2>need help?</h2>
+
+<p>if you need help, there is a way to submit a request for aid called &ldquo;issues&rdquo;. <a href="https://github.com/donuts-are-good/bearclaw/issues/new/choose">leave a message here</a> and someone will respond.</p>
+
+<h1><a href="https://github.com/donuts-are-good/bearclaw/blob/master/markdown/README.md">&lt;&lt; Go back</a></h1></div>
+</div>
+
+<footer class="footer">
+    <div class="row">
+        <div class="col">
+            <img height="60" width="120" src="https://user-images.githubusercontent.com/96031819/218300324-0eba5571-82f9-4a24-af2a-48c8fa935780.svg" alt="bearclaw svg logo" class="img-fluid">
+        </div>
+        <div class="col">
+            <b>bearclaw</b> is a tiny static site generator <br>
+            <small class="text-muted">write your content in markdown and bearclaw converts it to html</small>
+        </div>
+        <div class="col">
+            <a href="https://github.com/donuts-are-good/bearclaw">source code</a>, <a href="https://github.com/donuts-are-good/bearclaw/blob/master/license">license</a> <br>
+            <a href="https://github.com/donuts-are-good/bearclaw/blob/master/README.md">readme</a>, <a href="https://github.com/donuts-are-good/bearclaw/issues/new">bugs</a> <br>
+        </div>
+        <div class="col text-muted"><span style="color:deeppink">&hearts;</span> <b><a style="text-decoration:none;color:black" href="https://github.com/donuts-are-good/bearclaw/" target="_blank">@donuts-are-good</a></b><br><a href="https://github.com/donuts-are-good/bearclaw/blob/master/license" target="_blank" style="text-decoration:none;color:black">MIT License</a><br>2023</div>
+    </div>
+</footer>
+</div>
+</body>
+
+</html>

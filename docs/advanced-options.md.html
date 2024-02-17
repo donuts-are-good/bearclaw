@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>bearclaw</title>
+    <link rel="icon" type="image/x-icon" href="https://user-images.githubusercontent.com/96031819/218300046-eb4cd215-b8ef-44bb-992b-3ce640be7623.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .banner {
+            padding-top: 2em;
+            padding-bottom: 1.2em;
+            font-size: 4em;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .info {
+            font-family: monospace;
+            font-size: 1.2em;
+        }
+
+        a {
+            color: deepskyblue;
+            text-decoration: underline;
+            text-decoration-style: solid;
+            text-decoration-thickness: 4px;
+            text-decoration-color: #ffeeee;
+            text-decoration-skip-ink: none;
+        }
+
+        .footer {
+            padding-top: 8em;
+            font-family: monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="banner">
+            <img src="https://user-images.githubusercontent.com/96031819/218300046-eb4cd215-b8ef-44bb-992b-3ce640be7623.png" alt="site logo" class="img-fluid">
+            bearclaw blog
+        </div>
+
+        <div class="row">
+            <div class="col-3 info">
+                <p>👋 Welcome :)<br>
+                    <small>I made this blog with a cool static site generator called <a href="https://github.com/donuts-are-good/bearclaw">bearclaw</a>, try it out!</small>
+                </p>
+                <b>links</b>
+                <br><small><a href="./index.html">🏠 home</a></small>
+                <br><small><a href="./about.html">🙋 about</a></small>
+                <br><small><a href="./feed.xml">📡 rss</a></small>
+            </div>
+            <div class="col"><h1>advanced options</h1>
+
+<p>one-size-fits-all is generally okay, but not everyone has the same tastes. these are some advanced options that made sense to add to help out different setups.</p>
+
+<p>you can view these by running bearclaw like this:</p>
+
+<p><code>bearclaw --help</code> or <code>bearclaw -h</code></p>
+
+<pre><code>╭── ~/Projects/bearclaw 
+╰─$ ./bearclaw --help
+
+Usage of ./bearclaw:
+  -input string
+    	the input folder for markdown files (default &quot;./markdown&quot;)
+  -output string
+    	the output folder for html files (default &quot;./output&quot;)
+  -plugins string
+    	the plugins folder for plugins (default &quot;./plugins&quot;)
+  -templates string
+    	the templates folder for header and footer html files (default &quot;./templates&quot;)
+  -watch
+    	watch the content directories for changes
+</code></pre>
+
+<h2>details</h2>
+
+<h3><code>--input</code></h3>
+
+<p>example: <code>./bearclaw --input path/to/your/markdown/files</code>
+this is the folder where your markdown files go</p>
+
+<h3><code>--output</code></h3>
+
+<p>example: <code>./bearclaw --output path/to/your/html/folder</code>
+this is the folder where your html files end up</p>
+
+<h3><code>--plugins</code></h3>
+
+<p>example: <code>./bearclaw --plugins path/to/your/bearclaw/plugins</code>
+this is the folder where your plugins go</p>
+
+<h3><code>--templates</code></h3>
+
+<p>example: <code>./bearclaw --templates path/to/your/header/and/footer/files</code>
+this is the folder where your templates go if you wanted to add others for theme switching.</p>
+
+<h3><code>--watch</code></h3>
+
+<p>example: <code>./bearclaw --watch</code>
+watch your templates and markdown folders for changes.</p>
+
+<h1><a href="https://github.com/donuts-are-good/bearclaw/blob/master/markdown/README.md">&lt;&lt; Go back</a></h1></div>
+</div>
+
+<footer class="footer">
+    <div class="row">
+        <div class="col">
+            <img height="60" width="120" src="https://user-images.githubusercontent.com/96031819/218300324-0eba5571-82f9-4a24-af2a-48c8fa935780.svg" alt="bearclaw svg logo" class="img-fluid">
+        </div>
+        <div class="col">
+            <b>bearclaw</b> is a tiny static site generator <br>
+            <small class="text-muted">write your content in markdown and bearclaw converts it to html</small>
+        </div>
+        <div class="col">
+            <a href="https://github.com/donuts-are-good/bearclaw">source code</a>, <a href="https://github.com/donuts-are-good/bearclaw/blob/master/license">license</a> <br>
+            <a href="https://github.com/donuts-are-good/bearclaw/blob/master/README.md">readme</a>, <a href="https://github.com/donuts-are-good/bearclaw/issues/new">bugs</a> <br>
+        </div>
+        <div class="col text-muted"><span style="color:deeppink">&hearts;</span> <b><a style="text-decoration:none;color:black" href="https://github.com/donuts-are-good/bearclaw/" target="_blank">@donuts-are-good</a></b><br><a href="https://github.com/donuts-are-good/bearclaw/blob/master/license" target="_blank" style="text-decoration:none;color:black">MIT License</a><br>2023</div>
+    </div>
+</footer>
+</div>
+</body>
+
+</html>

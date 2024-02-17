@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>bearclaw</title>
+    <link rel="icon" type="image/x-icon" href="https://user-images.githubusercontent.com/96031819/218300046-eb4cd215-b8ef-44bb-992b-3ce640be7623.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .banner {
+            padding-top: 2em;
+            padding-bottom: 1.2em;
+            font-size: 4em;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .info {
+            font-family: monospace;
+            font-size: 1.2em;
+        }
+
+        a {
+            color: deepskyblue;
+            text-decoration: underline;
+            text-decoration-style: solid;
+            text-decoration-thickness: 4px;
+            text-decoration-color: #ffeeee;
+            text-decoration-skip-ink: none;
+        }
+
+        .footer {
+            padding-top: 8em;
+            font-family: monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="banner">
+            <img src="https://user-images.githubusercontent.com/96031819/218300046-eb4cd215-b8ef-44bb-992b-3ce640be7623.png" alt="site logo" class="img-fluid">
+            bearclaw blog
+        </div>
+
+        <div class="row">
+            <div class="col-3 info">
+                <p>👋 Welcome :)<br>
+                    <small>I made this blog with a cool static site generator called <a href="https://github.com/donuts-are-good/bearclaw">bearclaw</a>, try it out!</small>
+                </p>
+                <b>links</b>
+                <br><small><a href="./index.html">🏠 home</a></small>
+                <br><small><a href="./about.html">🙋 about</a></small>
+                <br><small><a href="./feed.xml">📡 rss</a></small>
+            </div>
+            <div class="col"><h1>bearclaw origins</h1>
+
+<p><em>hello, i&rsquo;m <a href="https://github.com/donuts-are-good">@donuts-are-good</a>, the author of bearclaw. hopefully this document answers some of the questions about how bearclaw got made. if you have any questions, just ask.</em></p>
+
+<p>bearclaw happened because of challenge 2023 (i do some type of year-long programming challenge like this every year), which in short is a self-imposed challenge to push 1 fully formed project every week.  it just made sense to want to live-blog about the projects and how they&rsquo;re going along the way, if anything just to look back at the end of the year and see what can be learned.</p>
+
+<p>the blog never got made, but bearclaw did in hopes that some day a blog would happen, as of this time, Mar 6th 2023, donuts-are-good.com is still a 404, and the completed project count is approaching 20. it&rsquo;s a very lucky thing that there wasn&rsquo;t a stipulation that a project have complete documentation or branding package to be considered complete :)</p>
+
+<h2>but why bearclaw?</h2>
+
+<p>normally html with something like bootstrap is quick enough to write by hand, and i know the bootstrap side well, so it made sense that whatever blog i come up with wouldn&rsquo;t be on some platform somewhere, i&rsquo;d just set up my own site and host it on github pages or something. as I was writing the html for an article, the main page, and a list of posts, i was thinking of how easy it used to be to use server-side includes to add &lsquo;template&rsquo; stuff to your website.</p>
+
+<pre><code>&lt;!--#include virtual=&quot;/cgi-bin/counter.pl&quot; --&gt; 
+</code></pre>
+
+<p><em>server side includes: this is how you&rsquo;d insert a page hit counter, for example, in the late 17th century</em></p>
+
+<p><strong>imagine this scenario:</strong> you have a header, a footer, and a menu and you have this code on every blog post. now imagine you want to add an item to your menu. unless you&rsquo;re running react or something that shares code, you&rsquo;re going to be modifying every one of those html files to update your menu.</p>
+
+<p><strong>initially, bearclaw was going to be just that. <code>header.html</code>, <code>footer.html</code>, and <code>menu.html</code>.</strong></p>
+
+<p>those changes took very little time to put together, so rather than actually start writing articles, i figured id make bearclaw this week&rsquo;s project. fast forward to today, it&rsquo;s still going, so here we are.</p>
+
+<h1><a href="https://github.com/donuts-are-good/bearclaw/blob/master/markdown/README.md">&lt;&lt; Go back</a></h1></div>
+</div>
+
+<footer class="footer">
+    <div class="row">
+        <div class="col">
+            <img height="60" width="120" src="https://user-images.githubusercontent.com/96031819/218300324-0eba5571-82f9-4a24-af2a-48c8fa935780.svg" alt="bearclaw svg logo" class="img-fluid">
+        </div>
+        <div class="col">
+            <b>bearclaw</b> is a tiny static site generator <br>
+            <small class="text-muted">write your content in markdown and bearclaw converts it to html</small>
+        </div>
+        <div class="col">
+            <a href="https://github.com/donuts-are-good/bearclaw">source code</a>, <a href="https://github.com/donuts-are-good/bearclaw/blob/master/license">license</a> <br>
+            <a href="https://github.com/donuts-are-good/bearclaw/blob/master/README.md">readme</a>, <a href="https://github.com/donuts-are-good/bearclaw/issues/new">bugs</a> <br>
+        </div>
+        <div class="col text-muted"><span style="color:deeppink">&hearts;</span> <b><a style="text-decoration:none;color:black" href="https://github.com/donuts-are-good/bearclaw/" target="_blank">@donuts-are-good</a></b><br><a href="https://github.com/donuts-are-good/bearclaw/blob/master/license" target="_blank" style="text-decoration:none;color:black">MIT License</a><br>2023</div>
+    </div>
+</footer>
+</div>
+</body>
+
+</html>
